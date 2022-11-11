@@ -17,6 +17,19 @@ export class AuthResolver {
     return this.authService.signup(input);
   }
 
+  @Mutation(() => Boolean)
+  async beginResetPassword(@Args('email') email: string) {
+    return this.authService.beginResetPassword(email)
+  }
+
+  @Mutation(() => Boolean)
+  async resetPassword(
+    @Args('resetToken') resetToken: string,
+    @Args('newPassword') newPassword: string,
+  ) {
+    return this.authService.resetPassword(resetToken, newPassword)
+  }
+
   @Mutation(() => Auth)
   async login(
     @Args('input') input: LoginInput,

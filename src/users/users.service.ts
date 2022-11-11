@@ -18,8 +18,6 @@ export class UsersService {
   ) {}
 
   async findUserProfile(user?: JwtUser) {
-    console.log('user', user);
-
     if (!user) return null;
 
     return await this.userModel.findOne({

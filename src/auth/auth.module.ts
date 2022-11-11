@@ -4,8 +4,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
-import { jwtConstants } from './constants';
-import { JwtStrategy } from './jwt.strategy';
 import { GoogleStrategy } from './google.strategy';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -16,24 +14,44 @@ import {
 import { AuthResolver } from './auth.resolver';
 import { User, UserSchema } from 'src/users/schemas/user.schema';
 import { AuthMiddleware } from './auth.middleware';
+import { readFileSync } from 'fs';
+import {
+  ResetPassword,
+  ResetPasswordSchema,
+} from './schemas/reset-password.schema';
+import { join } from 'path';
+
+const publicKey = readFileSync(
+  join(__dirname, '..', '..', 'keys', 'jwt.public.key'),
+  'utf-8',
+);
+
+const privateKey = readFileSync(
+  join(__dirname, '..', '..', 'keys', 'jwt.private.key'),
+  'utf-8',
+);
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: PendingUser.name, schema: PendingUserSchema },
       { name: User.name, schema: UserSchema },
+      { name: ResetPassword.name, schema: ResetPasswordSchema },
     ]),
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '365d' },
+      publicKey,
+      privateKey,
+      signOptions: {
+        algorithm: 'RS256',
+        expiresIn: '365d',
+      },
     }),
   ],
   providers: [
     AuthService,
     LocalStrategy,
-    JwtStrategy,
     GoogleStrategy,
     AuthResolver,
   ],

@@ -15,8 +15,6 @@ export class AuthMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const { authorization } = req.headers
 
-    console.log('Middleware...');
-
     if (
       typeof authorization !== 'string' ||
       !authorization.startsWith('Bearer ')
@@ -32,7 +30,6 @@ export class AuthMiddleware implements NestMiddleware {
     }
     try {
       decoded = await this.jwtService.verifyAsync(token)
-      console.log('decoded', decoded);
   
     } catch {
       return next()
@@ -45,9 +42,6 @@ export class AuthMiddleware implements NestMiddleware {
       })
       .exec()
 
-      
-    console.log('user', user);
-
     if (!user) {
       return next()
     }
@@ -56,7 +50,6 @@ export class AuthMiddleware implements NestMiddleware {
       id: user._id,
       role: user.role
     }
-    console.log('req.user', req.user);
 
     next()
   }
