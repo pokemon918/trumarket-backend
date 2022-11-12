@@ -40,3 +40,7 @@ lerna-debug.log*
 # Keys
 /keys/*
 !/keys/.gitkeep
+
+# Files Storage
+/files-storage/*
+!/files-storage/.gitkeep

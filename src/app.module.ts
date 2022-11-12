@@ -12,6 +12,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { AuthMiddleware } from './auth/auth.middleware';
+import { FilesModule } from './files/files.module';
+import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from './categories/categories.module';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -31,6 +34,9 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
       },
       persistedQueries: false,
     }),
+    FilesModule,
+    ProductsModule,
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [
