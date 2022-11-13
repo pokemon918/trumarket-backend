@@ -21,7 +21,7 @@ export class FilesController {
   @Public()
   getFile(@Param('filename') filename: string, @Res() res: Response) {
     const file = this.filesService.getFile(filename);
-    file.pipe(res);
+    res.sendFile(file);
   }
 
   @Post('upload')

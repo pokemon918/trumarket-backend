@@ -7,7 +7,7 @@ import { diskStorage } from 'multer';
 import { promisify } from 'util';
 import { randomBytes } from 'crypto';
 import * as mime from 'mime';
-import { createReadStream } from 'fs';
+import { readFile } from 'fs/promises';
 
 const { THIS_BACKEND_URL: backendUrl } = process.env as { [k: string]: string };
 
@@ -43,7 +43,7 @@ export class FilesService {
 
   getFile(filename: string) {
     if (!FILENAME_REGEX.test(filename)) throw new BadRequestException();
-    return createReadStream(join(storageDest, filename));
+    return join(storageDest, filename);
   }
 
   async recordFile(filename: string, rId: string) {
