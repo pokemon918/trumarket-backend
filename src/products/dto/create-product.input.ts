@@ -1,28 +1,27 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { Prop, Schema } from '@nestjs/mongoose';
+import { LangStringI } from 'src/global/dto/lang-string.input';
+import { ProductType } from '../schemas/product.schema';
 
 @InputType()
 export class ProductSpecsInput {
   @Field()
-  name: string;
+  name: LangStringI;
 
   @Field()
-  value: string;
+  value: LangStringI;
 }
 
 @InputType()
 export class ProductTraceInput {
-  @Field()
-  type: string;
+  @Field(() => ProductType)
+  type: ProductType;
 
   @Field()
-  title: string;
-
-  @Field()
-  description: string;
+  description: LangStringI;
 
   @Field(() => [String])
-  gallery: string;
+  gallery: string[];
 }
 
 @InputType()
@@ -30,7 +29,7 @@ export class ProductTraceInput {
 export class CreateProductInput {
   @Prop()
   @Field()
-  name: string;
+  name: LangStringI;
 
   @Prop()
   @Field()
@@ -42,7 +41,7 @@ export class CreateProductInput {
 
   @Prop()
   @Field()
-  hsCode: string;
+  hsCode: LangStringI;
 
   @Prop()
   @Field()
@@ -50,15 +49,15 @@ export class CreateProductInput {
 
   @Prop()
   @Field()
-  bigTitle: string;
+  bigTitle: LangStringI;
 
   @Prop()
   @Field()
-  description: string;
+  description: LangStringI;
 
   @Prop()
   @Field()
-  offerPrices: string;
+  offerPrices: LangStringI;
 
   @Prop()
   @Field()

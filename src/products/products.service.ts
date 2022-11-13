@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
-import { CreateProductInput } from './schemas/dto/create-product.input';
-import { UpdateProductInput } from './schemas/dto/update-product.input';
+import { CreateProductInput } from './dto/create-product.input';
+import { UpdateProductInput } from './dto/update-product.input';
 import { Product, ProductDocument } from './schemas/product.schema';
 
 @Injectable()

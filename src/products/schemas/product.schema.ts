@@ -1,27 +1,33 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Category } from 'src/categories/schemas/category.schema';
+import { LangString } from 'src/global/schemas/lang-string.schema';
 
 @ObjectType()
 export class ProductSpecs {
   @Field()
-  name: string;
+  name: LangString;
 
   @Field()
-  value: string;
+  value: LangString;
 }
+
+export enum ProductType {
+  field = 'field',
+  packing = 'packing',
+  finalProduct = 'finalProduct',
+}
+
+registerEnumType(ProductType, { name: 'ProductType' });
 
 @ObjectType()
 export class ProductTrace {
-  @Field()
-  type: string;
+  @Field(() => ProductType)
+  type: ProductType;
 
   @Field()
-  title: string;
-
-  @Field()
-  description: string;
+  description: LangString;
 
   @Field(() => [String])
   gallery: string;
@@ -35,7 +41,7 @@ export class Product {
 
   @Prop()
   @Field()
-  name: string;
+  name: LangString;
 
   @Prop({ type: Types.ObjectId })
   @Field()
@@ -47,7 +53,7 @@ export class Product {
 
   @Prop()
   @Field()
-  hsCode: string;
+  hsCode: LangString;
 
   @Prop()
   @Field()
@@ -55,15 +61,15 @@ export class Product {
 
   @Prop()
   @Field()
-  bigTitle: string;
+  bigTitle: LangString;
 
   @Prop()
   @Field()
-  description: string;
+  description: LangString;
 
   @Prop()
   @Field()
-  offerPrices: string;
+  offerPrices: LangString;
 
   @Prop()
   @Field()
