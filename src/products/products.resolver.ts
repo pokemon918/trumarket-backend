@@ -30,4 +30,9 @@ export class ProductsResolver {
   updateProduct(@Args('input') input: UpdateProductInput) {
     return this.productsService.updateProduct(input);
   }
+  
+  @Mutation(() => Boolean)
+  async deleteProduct(@Args('_id') _id: string) {
+    return this.productsService.deleteProduct(_id);
+  }
 }

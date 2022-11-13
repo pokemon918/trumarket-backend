@@ -28,7 +28,7 @@ export class ArticlesResolver {
     return this.articlesService.update(input);
   }
 
-  @Mutation(() => Article)
+  @Mutation(() => Boolean)
   async deleteArticle(@Args('_id') _id: string) {
     return this.articlesService.delete(_id);
   }

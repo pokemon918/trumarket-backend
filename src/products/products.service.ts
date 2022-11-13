@@ -32,4 +32,9 @@ export class ProductsService {
 
     return this.productModel.findOne({ _id });
   }
+
+  async deleteProduct(_id: string) {
+    await this.productModel.deleteOne({ _id });
+    return true;
+  }
 }

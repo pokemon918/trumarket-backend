@@ -29,7 +29,8 @@ export class ArticlesService {
     return this.articleModel.findOne({ _id });
   }
 
-  delete(_id: string) {
-    return this.articleModel.deleteOne({ _id });
+  async delete(_id: string) {
+    await this.articleModel.deleteOne({ _id });
+    return true;
   }
 }
