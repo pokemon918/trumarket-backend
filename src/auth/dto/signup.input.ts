@@ -12,9 +12,9 @@ class SignupBase {
   @MinLength(2)
   companyName: string;
 
-  // @Field()
-  // @Length(2)
-  // country: string;
+  @Field()
+  @Length(2)
+  country: string;
 
   @Field()
   @MinLength(4)

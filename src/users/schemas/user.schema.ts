@@ -13,7 +13,7 @@ registerEnumType(UserRole, { name: 'UserRole' });
 export class UserBase {
   fullName: string;
   companyName: string;
-  // country: string;
+  country: string;
   phone: string;
   role: UserRole;
 }
@@ -39,9 +39,9 @@ export class User implements UserBase {
   @Field()
   companyName: string;
 
-  // @Prop()
-  // @Field()
-  // country: string;
+  @Prop()
+  @Field()
+  country: string;
 
   @Prop()
   @Field()
