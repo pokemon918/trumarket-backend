@@ -18,19 +18,25 @@ const storageDest = join(__dirname, '../../files-storage');
 
 export const fileStorage = diskStorage({
   destination: (req, file, cb) => {
+    console.log('destination');
     cb(null, storageDest);
   },
   filename: async (req, file, cb) => {
+    console.log('filename', file);
     const name = (await randomBytesAsync(48)).toString('hex');
     const filename = (name + extname(file.originalname)).toLowerCase();
 
     const fileType = mime.getType(filename) ?? '';
 
     if (fileType.startsWith('image/') || fileType.startsWith('video/')) {
+      console.log('YESSS');
       cb(null, filename);
     } else {
+      console.log('Hiiioo');
       cb(new BadRequestException(), '');
     }
+
+    console.log('Yooooo');
   },
 });
 
@@ -46,17 +52,14 @@ export class FilesService {
     return join(storageDest, filename);
   }
 
-  async recordFile(filename: string, rId: string) {
-    const relationId =
-      typeof rId === 'string' && rId.split('-').every((p) => p.length > 0)
-        ? rId
-        : undefined;
+  async recordFiles(files: Express.Multer.File[]) {
+    const urls: string[] = [];
 
-    await this.filesModel.create({
-      filename,
-      relationId,
-    });
+    for (const { filename } of files) {
+      await this.filesModel.create({ filename });
+      urls.push(`${backendUrl}/files/${filename}`);
+    }
 
-    return `${backendUrl}/files/${filename}`;
+    return urls;
   }
 }

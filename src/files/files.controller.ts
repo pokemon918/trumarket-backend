@@ -7,8 +7,9 @@ import {
   Get,
   Param,
   Res,
+  UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { FilesService, fileStorage } from './files.service';
 import { Response } from 'express';
 import { Public } from 'src/auth/public.decorator';
@@ -25,11 +26,10 @@ export class FilesController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', { storage: fileStorage }))
+  @UseInterceptors(FilesInterceptor('files', 20, { storage: fileStorage }))
   uploadFile(
-    @UploadedFile() { filename }: Express.Multer.File,
-    @Query('relationId') relationId: string,
+    @UploadedFiles() files: Express.Multer.File[]
   ) {
-    return this.filesService.recordFile(filename, relationId);
+    return this.filesService.recordFiles(files);
   }
 }
