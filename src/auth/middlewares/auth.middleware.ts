@@ -28,9 +28,9 @@ export class AuthMiddleware implements NestMiddleware {
       uid: string
       xky: string
     }
+    
     try {
       decoded = await this.jwtService.verifyAsync(token)
-  
     } catch {
       return next()
     }

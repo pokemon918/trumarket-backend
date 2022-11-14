@@ -7,10 +7,6 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  PendingUser,
-  PendingUserDocument,
-} from 'src/users/schemas/pending-user.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 import { CurUser } from './decorators/cur-user.decorator';
@@ -38,38 +34,44 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    @InjectModel(PendingUser.name)
-    private pendingUserModel: Model<PendingUserDocument>,
     @InjectModel(User.name)
     private userModel: Model<User>,
     @InjectModel(ResetPassword.name)
     private resetPasswordModel: Model<ResetPasswordDocument>,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
-  }
-
-  // async login(user: any) {
-  //   const payload = { username: user.username, sub: user.userId };
-
-  //   return {
-  //     access_token: this.jwtService.sign(payload),
-  //   };
-  // }
-
-  async signToken({ _id, accessKey }: { _id: string; accessKey: string }) {
+  // helper methods
+  private async signToken({
+    _id,
+    accessKey,
+  }: {
+    _id: string;
+    accessKey: string;
+  }) {
     return this.jwtService.sign({
       uid: _id,
       xky: accessKey,
     });
   }
 
+  private async sendResetLink(to: string, resetToken: string): Promise<void> {
+    const resetLink = `${authUrl}/enter-new-password/${resetToken}`;
+
+    await sendMail({
+      to,
+      subject: "Reset your account's password on TRU Market",
+      html:
+        "<p>To reset your account's password on TRU Market please click the link below, " +
+        '<br />' +
+        'or copy it and paste it into a new tab of your browser:</p> ' +
+        '<br />' +
+        `<p><a href="${resetLink}">${resetLink}</a></p> ` +
+        '<br />' +
+        '<p style="color: #757575">(The password reset link is valid for 1 hour and usable only once)</p>',
+    });
+  }
+
+  // signup via email
   async signup(input: SignupInput) {
     const password = await hash(input.password, 10);
 
@@ -90,33 +92,7 @@ export class AuthService {
     };
   }
 
-  async login(input: LoginInput) {
-    const user = await this.userModel.findOne({
-      email: input.email,
-    });
-
-    if (!user || !user.password) throw new UnauthorizedException();
-
-    const isPasswordMatch = await compare(input.password, user.password);
-
-    if (!isPasswordMatch) throw new UnauthorizedException();
-
-    return {
-      token: await this.signToken(user),
-    };
-  }
-
-  async finalizeSignup({ pendingUserToken, ...input }: FinalizeSignupInput) {
-    const user = await this.usersService.activatePendingUser(
-      pendingUserToken,
-      input,
-    );
-
-    return {
-      token: await this.signToken(user),
-    };
-  }
-
+  // auth (signup/login) via google
   async handleGoogleRedirect(@CurUser() user: ExternalUser): Promise<{
     redirectUrl: string;
     cookie?: {
@@ -165,23 +141,35 @@ export class AuthService {
     };
   }
 
-  private async sendResetLink(to: string, resetToken: string): Promise<void> {
-    const resetLink = `${authUrl}/enter-new-password/${resetToken}`;
+  async finalizeSignup({ pendingUserToken, ...input }: FinalizeSignupInput) {
+    const user = await this.usersService.activatePendingUser(
+      pendingUserToken,
+      input,
+    );
 
-    await sendMail({
-      to,
-      subject: "Reset your account's password on TRU Market",
-      html:
-        "<p>To reset your account's password on TRU Market please click the link below, " +
-        '<br />' +
-        'or copy it and paste it into a new tab of your browser:</p> ' +
-        '<br />' +
-        `<p><a href="${resetLink}">${resetLink}</a></p> ` +
-        '<br />' +
-        '<p style="color: #757575">(The password reset link is valid for 1 hour and usable only once)</p>',
-    });
+    return {
+      token: await this.signToken(user),
+    };
   }
 
+  // login via email
+  async login(input: LoginInput) {
+    const user = await this.userModel.findOne({
+      email: input.email,
+    });
+
+    if (!user || !user.password) throw new UnauthorizedException();
+
+    const isPasswordMatch = await compare(input.password, user.password);
+
+    if (!isPasswordMatch) throw new UnauthorizedException();
+
+    return {
+      token: await this.signToken(user),
+    };
+  }
+
+  // password reset
   async beginResetPassword(email: string) {
     const user = await this.userModel
       .findOne({

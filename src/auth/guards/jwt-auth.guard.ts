@@ -22,8 +22,7 @@ export class JwtAuthGuard implements CanActivate {
       AUTH_KIND_KEY,
       [ctx.getHandler(), ctx.getClass()],
     );
-
-    // console.log("JWT Guard");
+    
     if (
       authKind &&
       authKind.length > 0 &&
@@ -33,8 +32,7 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const { user } = extractReq(ctx);
-
-    // console.log("user.source", user?.source);
+    
     if (!user || user.source !== 'jwt') {
       throw new UnauthorizedException('UNAUTHORIZED');
     }

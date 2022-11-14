@@ -12,10 +12,6 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleOAuthGuard)
-  googleAuth() {}
-
-  @Get('google-redirect')
-  @UseGuards(GoogleOAuthGuard)
   async googleAuthRedirect(
     @CurUser() user: ExternalUser,
     @Res() res: Response,

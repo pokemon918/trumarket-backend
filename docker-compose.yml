@@ -23,6 +23,7 @@ services:
     volumes:
       - '.:/app'
       - '/app/node_modules'
+      - '/app/.vscode'
       - '/app/dist'
     depends_on:
       - mongo
