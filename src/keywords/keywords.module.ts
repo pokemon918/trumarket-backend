@@ -6,10 +6,8 @@ import { Keyword, KeywordSchema } from './schemas/keyword.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Keyword.name, schema: KeywordSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Keyword.name, schema: KeywordSchema }]),
   ],
-  providers: [KeywordsResolver, KeywordsService]
+  providers: [KeywordsResolver, KeywordsService],
 })
 export class KeywordsModule {}

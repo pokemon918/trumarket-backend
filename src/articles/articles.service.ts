@@ -26,11 +26,11 @@ export class ArticlesService {
       conditions.keywordsIds = { $in: [keywordId] };
     }
 
-    return this.articleModel.find(conditions).populate("keywords");
+    return this.articleModel.find(conditions).populate('keywords');
   }
 
   findOne(_id: string) {
-    return this.articleModel.findOne({ _id }).populate("keywords");
+    return this.articleModel.findOne({ _id }).populate('keywords');
   }
 
   async create(input: CreateArticleInput) {
@@ -41,8 +41,8 @@ export class ArticlesService {
         es: input.title.es.trim().replace(/\s+/, ' '),
       },
     });
-    
-    return this.articleModel.findOne({ _id }).populate("keywords");
+
+    return this.articleModel.findOne({ _id }).populate('keywords');
   }
 
   async update({ _id, ...input }: UpdateArticleInput) {
@@ -57,7 +57,7 @@ export class ArticlesService {
     });
 
     await this.articleModel.updateOne({ _id }, updated);
-    return this.articleModel.findOne({ _id }).populate("keywords");
+    return this.articleModel.findOne({ _id }).populate('keywords');
   }
 
   async delete(_id: string) {

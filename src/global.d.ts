@@ -7,7 +7,7 @@ interface ExternalUser {
 
 interface JwtUser {
   source: 'jwt';
-  id: string;
+  _id: string;
   role: 'admin' | 'buyer' | 'seller' | 'investor';
 }
 

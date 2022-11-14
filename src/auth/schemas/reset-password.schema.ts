@@ -1,29 +1,29 @@
-import { ObjectType } from '@nestjs/graphql'
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
+import { ObjectType } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 @ObjectType()
 @Schema({ collection: 'resetPasswords', timestamps: true })
 export class ResetPassword {
   @Prop()
-  userId: string
+  userId: string;
 
   @Prop()
-  resetToken: string
+  resetToken: string;
 
   @Prop()
-  isUsed: boolean
+  isUsed: boolean;
 
   @Prop()
-  expiredAt: Date
+  expiredAt: Date;
 
   @Prop()
-  createdAt: Date
+  createdAt: Date;
 
   @Prop()
-  updatedAt: Date
+  updatedAt: Date;
 }
 
-export type ResetPasswordDocument = ResetPassword & Document
+export type ResetPasswordDocument = ResetPassword & Document;
 
-export const ResetPasswordSchema = SchemaFactory.createForClass(ResetPassword)
+export const ResetPasswordSchema = SchemaFactory.createForClass(ResetPassword);

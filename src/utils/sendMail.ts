@@ -12,16 +12,17 @@ interface Mail {
   replyTo?: string;
 }
 
-const sendMail = ({ subject, html, text, to, replyTo }: Mail) => sgMail.send({
-  from: {
-    name: 'TRU Market',
-    email: SENDER_MAIL,
-  },
-  to,
-  subject,
-  html,
-  text: text as string,
-  replyTo,
-})
+const sendMail = ({ subject, html, text, to, replyTo }: Mail) =>
+  sgMail.send({
+    from: {
+      name: 'TRU Market',
+      email: SENDER_MAIL,
+    },
+    to,
+    subject,
+    html,
+    text: text as string,
+    replyTo,
+  });
 
 export default sendMail;

@@ -20,7 +20,7 @@ export class Article {
   @Prop()
   @Field()
   content: LangString;
-  
+
   @Prop()
   @Field()
   contentText: LangString;
@@ -46,8 +46,8 @@ export const ArticleSchema = (() => {
 
   schema.virtual('keywords', {
     ref: Keyword.name,
-    localField: "keywordsIds", 
-    foreignField: '_id'
+    localField: 'keywordsIds',
+    foreignField: '_id',
   });
 
   return schema;

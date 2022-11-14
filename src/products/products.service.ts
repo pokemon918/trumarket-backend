@@ -27,11 +27,11 @@ export class ProductsService {
       conditions.categoryId = categoryId;
     }
 
-    return this.productModel.find(conditions).populate("category");
+    return this.productModel.find(conditions).populate('category');
   }
 
   getProduct(_id: string) {
-    return this.productModel.findOne({ _id }).populate("category");
+    return this.productModel.findOne({ _id }).populate('category');
   }
 
   async createProduct(input: CreateProductInput) {
@@ -43,7 +43,7 @@ export class ProductsService {
       },
     });
 
-    return this.productModel.findOne({ _id }).populate("category");
+    return this.productModel.findOne({ _id }).populate('category');
   }
 
   async updateProduct({ _id, ...input }: UpdateProductInput) {
@@ -59,7 +59,7 @@ export class ProductsService {
 
     await this.productModel.updateOne({ _id }, updated);
 
-    return this.productModel.findOne({ _id }).populate("category");
+    return this.productModel.findOne({ _id }).populate('category');
   }
 
   async deleteProduct(_id: string) {

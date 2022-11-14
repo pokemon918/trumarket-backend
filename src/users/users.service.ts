@@ -21,7 +21,7 @@ export class UsersService {
     if (!user) return null;
 
     return await this.userModel.findOne({
-      _id: user.id,
+      _id: user._id,
     });
   }
 

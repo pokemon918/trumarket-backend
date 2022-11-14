@@ -6,9 +6,7 @@ import { File, FileSchema } from './schemas/file.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: File.name, schema: FileSchema },
-    ]),
+    MongooseModule.forFeature([{ name: File.name, schema: FileSchema }]),
   ],
   providers: [FilesService],
   controllers: [FilesController],

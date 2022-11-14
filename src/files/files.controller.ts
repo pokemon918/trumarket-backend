@@ -28,9 +28,7 @@ export class FilesController {
 
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files', 20, { storage: fileStorage }))
-  uploadFile(
-    @UploadedFiles() files: Express.Multer.File[]
-  ) {
+  uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     return this.filesService.recordFiles(files);
   }
 }

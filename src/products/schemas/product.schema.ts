@@ -112,9 +112,9 @@ export const ProductSchema = (() => {
 
   schema.virtual('category', {
     ref: Category.name,
-    localField: "categoryId", 
+    localField: 'categoryId',
     foreignField: '_id',
-    justOne: true
+    justOne: true,
   });
 
   return schema;

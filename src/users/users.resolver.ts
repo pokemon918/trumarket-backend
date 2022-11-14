@@ -6,7 +6,7 @@ import { UsersService } from './users.service';
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor (private userService: UsersService) {}
+  constructor(private userService: UsersService) {}
 
   @Query(() => User, { nullable: true })
   @Public()

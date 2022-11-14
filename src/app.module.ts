@@ -25,8 +25,8 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
       driver: ApolloDriver,
       autoSchemaFile: true,
       sortSchema: true,
-      playground:NODE_ENV === 'development',
-      introspection:NODE_ENV === 'development',
+      playground: NODE_ENV === 'development',
+      introspection: NODE_ENV === 'development',
       cors: {
         origin: CORS,
       },
@@ -37,7 +37,7 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     CategoriesModule,
     ArticlesModule,
     KeywordsModule,
-    MailsModule
+    MailsModule,
   ],
   providers: [
     {
@@ -48,6 +48,6 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*')
+    consumer.apply(AuthMiddleware).forRoutes('*');
   }
 }
