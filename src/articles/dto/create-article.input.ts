@@ -14,4 +14,7 @@ export class CreateArticleInput {
 
   @Field()
   contentText: LangStringI;
+
+  @Field(() => [String])
+  keywordsIds: string[];
 }

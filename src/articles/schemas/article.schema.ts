@@ -24,6 +24,10 @@ export class Article {
   @Field()
   contentText: LangString;
 
+  @Prop()
+  @Field(() => [String])
+  keywordsIds: string[];
+
   @Field()
   createdAt: Date;
 

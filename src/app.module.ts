@@ -16,6 +16,7 @@ import { FilesModule } from './files/files.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ArticlesModule } from './articles/articles.module';
+import { KeywordsModule } from './keywords/keywords.module';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -38,7 +39,8 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     FilesModule,
     ProductsModule,
     CategoriesModule,
-    ArticlesModule
+    ArticlesModule,
+    KeywordsModule
   ],
   controllers: [AppController],
   providers: [

@@ -84,6 +84,10 @@ export class Product {
   specs: ProductSpecs[];
 
   @Prop()
+  @Field()
+  availableSpecs: LangString;
+
+  @Prop()
   @Field(() => [ProductTrace])
   traces: ProductTrace[];
 

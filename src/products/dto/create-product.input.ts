@@ -71,6 +71,9 @@ export class CreateProductInput {
   @Field(() => [ProductSpecsInput])
   specs: ProductSpecsInput[];
 
+  @Field()
+  availableSpecs: LangStringI;
+
   @Prop()
   @Field(() => [ProductTraceInput])
   traces: ProductTraceInput[];
