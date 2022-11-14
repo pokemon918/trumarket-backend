@@ -27,21 +27,23 @@ export class ProductsService {
       conditions.categoryId = categoryId;
     }
 
-    return this.productModel.find(conditions);
+    return this.productModel.find(conditions).populate("category");
   }
 
   getProduct(_id: string) {
-    return this.productModel.findOne({ _id });
+    return this.productModel.findOne({ _id }).populate("category");
   }
 
-  createProduct(input: CreateProductInput) {
-    return this.productModel.create({
+  async createProduct(input: CreateProductInput) {
+    const { _id } = await this.productModel.create({
       ...input,
       name: {
         en: input.name.en.trim().replace(/\s+/, ' '),
         es: input.name.es.trim().replace(/\s+/, ' '),
       },
     });
+
+    return this.productModel.findOne({ _id }).populate("category");
   }
 
   async updateProduct({ _id, ...input }: UpdateProductInput) {
@@ -57,7 +59,7 @@ export class ProductsService {
 
     await this.productModel.updateOne({ _id }, updated);
 
-    return this.productModel.findOne({ _id });
+    return this.productModel.findOne({ _id }).populate("category");
   }
 
   async deleteProduct(_id: string) {

@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { LangString } from 'src/global/schemas/lang-string.schema';
+import { Keyword } from 'src/keywords/schemas/keyword.schema';
 
 @ObjectType()
 @Schema({ timestamps: true })
@@ -28,6 +29,9 @@ export class Article {
   @Field(() => [String])
   keywordsIds: string[];
 
+  @Field(() => [Keyword])
+  keywords: Keyword[];
+
   @Field()
   createdAt: Date;
 
@@ -37,4 +41,14 @@ export class Article {
 
 export type ArticleDocument = Article & Document;
 
-export const ArticleSchema = SchemaFactory.createForClass(Article);
+export const ArticleSchema = (() => {
+  const schema = SchemaFactory.createForClass(Article);
+
+  schema.virtual('keywords', {
+    ref: Keyword.name,
+    localField: "keywordsIds", 
+    foreignField: '_id'
+  });
+
+  return schema;
+})();

@@ -47,6 +47,9 @@ export class Product {
   @Field()
   categoryId: string;
 
+  @Field()
+  category: Category;
+
   @Prop()
   @Field()
   country: string;
@@ -98,4 +101,15 @@ export class Product {
 
 export type ProductDocument = Product & Document;
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductSchema = (() => {
+  const schema = SchemaFactory.createForClass(Product);
+
+  schema.virtual('category', {
+    ref: Category.name,
+    localField: "categoryId", 
+    foreignField: '_id',
+    justOne: true
+  });
+
+  return schema;
+})();
