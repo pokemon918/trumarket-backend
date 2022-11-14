@@ -34,7 +34,7 @@ export class ProductTrace {
 }
 
 @ObjectType()
-@Schema()
+@Schema({ timestamps: true })
 export class Product {
   @Field()
   _id: string;
@@ -97,6 +97,12 @@ export class Product {
   @Prop()
   @Field(() => [String])
   certifications: string[];
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
 }
 
 export type ProductDocument = Product & Document;

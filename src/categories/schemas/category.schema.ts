@@ -12,6 +12,12 @@ export class Category {
   @Field()
   @Prop()
   name: LangString;
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
 }
 
 export type CategoryDocument = Category & Document;

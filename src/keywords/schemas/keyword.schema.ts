@@ -12,6 +12,12 @@ export class Keyword {
   @Field()
   @Prop()
   name: LangString;
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
 }
 
 export type KeywordDocument = Keyword & Document;
