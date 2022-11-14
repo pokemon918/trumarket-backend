@@ -168,7 +168,7 @@ export class AuthService {
   private async sendResetLink(to: string, resetToken: string): Promise<void> {
     const resetLink = `${authUrl}/enter-new-password/${resetToken}`;
 
-    const result = await sendMail({
+    await sendMail({
       to,
       subject: "Reset your account's password on TRU Market",
       html:

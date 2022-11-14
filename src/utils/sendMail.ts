@@ -6,21 +6,22 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 interface Mail {
   subject: string;
-  html: string;
+  html?: string;
+  text?: string;
   to: string;
   replyTo?: string;
 }
 
-const sendMail = ({ subject, html, to, replyTo }: Mail) =>
-  sgMail.send({
-    from: {
-      name: 'TRU Market',
-      email: SENDER_MAIL,
-    },
-    to,
-    subject,
-    html,
-    replyTo,
-  });
+const sendMail = ({ subject, html, text, to, replyTo }: Mail) => sgMail.send({
+  from: {
+    name: 'TRU Market',
+    email: SENDER_MAIL,
+  },
+  to,
+  subject,
+  html,
+  text: text as string,
+  replyTo,
+})
 
 export default sendMail;

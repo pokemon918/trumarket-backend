@@ -17,6 +17,7 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ArticlesModule } from './articles/articles.module';
 import { KeywordsModule } from './keywords/keywords.module';
+import { MailsModule } from './mails/mails.module';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -40,7 +41,8 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     ProductsModule,
     CategoriesModule,
     ArticlesModule,
-    KeywordsModule
+    KeywordsModule,
+    MailsModule
   ],
   controllers: [AppController],
   providers: [
