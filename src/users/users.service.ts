@@ -17,39 +17,6 @@ export class UsersService {
     private userModel: Model<UserDocument>,
   ) {}
 
-  async findUserProfile(user?: JwtUser) {
-    if (!user) return null;
-
-    return await this.userModel.findOne({
-      _id: user._id,
-    });
-  }
-
-  async activatePendingUser(pendingUserToken: string, info: UserBase) {
-    const pendingUser = await this.pendingUserModel.findOne({
-      token: pendingUserToken,
-    });
-
-    if (!pendingUser) throw new UnauthorizedException();
-
-    const { email } = pendingUser;
-
-    const accessKey = Date.now().toString();
-
-    const finalInfo = {
-      email,
-      ...info,
-      password: null,
-      accessKey,
-    };
-
-    const user = await this.userModel.create(finalInfo);
-
-    await this.pendingUserModel.deleteMany({ email });
-
-    return user;
-  }
-
   async createPendingUser(email: string): Promise<string> {
     const pendingUser = await this.pendingUserModel.findOne({
       email,
@@ -67,20 +34,34 @@ export class UsersService {
     return token;
   }
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  async activatePendingUser(pendingUserToken: string, info: UserBase) {
+    const pendingUser = await this.pendingUserModel.findOne({
+      token: pendingUserToken,
+    });
 
-  async findOne(username: string): Promise<any | undefined> {
-    return this.users.find((user) => user.username === username);
+    if (!pendingUser) throw new UnauthorizedException();
+
+    const { email } = pendingUser;
+
+    const finalInfo = {
+      email,
+      ...info,
+      password: null,
+      accessKey: Date.now().toString(),
+    };
+
+    const user = await this.userModel.create(finalInfo);
+
+    await this.pendingUserModel.deleteMany({ email });
+
+    return user;
+  }
+
+  async findUserProfile(user?: JwtUser) {
+    if (!user) return null;
+
+    return await this.userModel.findOne({
+      _id: user._id,
+    });
   }
 }

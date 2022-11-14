@@ -73,13 +73,13 @@ export class AuthService {
 
   // signup via email
   async signup(input: SignupInput) {
-    const password = await hash(input.password, 10);
-
     const existingUser = await this.userModel.findOne({
       email: input.email,
     });
 
     if (existingUser) throw new ConflictException();
+
+    const password = await hash(input.password, 10);
 
     const user = await this.userModel.create({
       ...input,
