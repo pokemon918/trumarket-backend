@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
-import { LangSearch } from 'src/global/dto/lang-search.input';
+import { LangSearchI } from 'src/global/dto/lang-search.input';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
@@ -14,7 +14,7 @@ export class ProductsService {
     private productModel: Model<ProductDocument>,
   ) {}
 
-  getProducts(nameSearch?: LangSearch, categoryId?: string) {
+  getProducts(nameSearch?: LangSearchI, categoryId?: string) {
     const conditions: FilterQuery<ProductDocument> = {};
 
     if (nameSearch) {

@@ -23,7 +23,7 @@ export class Article {
 
   @Prop()
   @Field()
-  contentText: LangString;
+  description: LangString;
 
   @Prop()
   @Field(() => [String])

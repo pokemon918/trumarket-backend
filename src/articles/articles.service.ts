@@ -5,7 +5,7 @@ import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
 import { Article, ArticleDocument } from './schemas/article.schema';
-import { LangSearch } from 'src/global/dto/lang-search.input';
+import { LangSearchI } from 'src/global/dto/lang-search.input';
 
 @Injectable()
 export class ArticlesService {
@@ -13,7 +13,7 @@ export class ArticlesService {
     @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
   ) {}
 
-  findAll(titleSearch?: LangSearch, keywordId?: string) {
+  findAll(titleSearch?: LangSearchI, keywordId?: string) {
     const conditions: FilterQuery<ArticleDocument> = {};
 
     if (titleSearch) {

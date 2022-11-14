@@ -13,7 +13,7 @@ export class CreateArticleInput {
   content: LangStringI;
 
   @Field()
-  contentText: LangStringI;
+  description: LangStringI;
 
   @Field(() => [String])
   keywordsIds: string[];

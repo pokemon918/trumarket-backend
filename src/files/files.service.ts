@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { File, FileDocument } from './schemas/file.schema';
@@ -42,7 +42,7 @@ export class FilesService {
   ) {}
 
   getFile(filename: string) {
-    if (!FILENAME_REGEX.test(filename)) throw new BadRequestException();
+    if (!FILENAME_REGEX.test(filename)) throw new NotFoundException();
     return join(storageDest, filename);
   }
 
