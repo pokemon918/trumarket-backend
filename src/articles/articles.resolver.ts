@@ -6,6 +6,7 @@ import { UpdateArticleInput } from './dto/update-article.input';
 import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { UserRole } from 'src/users/schemas/user.schema';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { LangSearch } from 'src/global/dto/lang-search.input';
 
 @Resolver(() => Article)
 @HasRole(UserRole.admin)
@@ -14,8 +15,11 @@ export class ArticlesResolver {
 
   @Query(() => [Article])
   @Public()
-  articles() {
-    return this.articlesService.findAll();
+  articles(
+    @Args('titleSearch', { nullable: true }) titleSearch?: LangSearch,
+    @Args('keywordId', { nullable: true }) keywordId?: string,
+  ) {
+    return this.articlesService.findAll(titleSearch, keywordId);
   }
 
   @Query(() => Article)

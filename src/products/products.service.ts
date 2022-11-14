@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
+import { LangSearch } from 'src/global/dto/lang-search.input';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
@@ -13,8 +14,20 @@ export class ProductsService {
     private productModel: Model<ProductDocument>,
   ) {}
 
-  getProducts() {
-    return this.productModel.find();
+  getProducts(nameSearch?: LangSearch, categoryId?: string) {
+    const conditions: FilterQuery<ProductDocument> = {};
+
+    if (nameSearch) {
+      const value = nameSearch.value.trim().replace(/\s+/, ' ');
+
+      conditions[`name.${nameSearch.lang}`] = new RegExp(value, 'i');
+    }
+
+    if (categoryId) {
+      conditions.categoryId = categoryId;
+    }
+
+    return this.productModel.find(conditions);
   }
 
   getProduct(_id: string) {
@@ -22,11 +35,25 @@ export class ProductsService {
   }
 
   createProduct(input: CreateProductInput) {
-    return this.productModel.create(input);
+    return this.productModel.create({
+      ...input,
+      name: {
+        en: input.name.en.trim().replace(/\s+/, ' '),
+        es: input.name.es.trim().replace(/\s+/, ' '),
+      },
+    });
   }
 
   async updateProduct({ _id, ...input }: UpdateProductInput) {
-    const updated = removeNullishAttrs(input);
+    const updated = removeNullishAttrs({
+      ...input,
+      name: input.name
+        ? {
+            en: input.name.en.trim().replace(/\s+/, ' '),
+            es: input.name.es.trim().replace(/\s+/, ' '),
+          }
+        : undefined,
+    });
 
     await this.productModel.updateOne({ _id }, updated);
 

@@ -49,7 +49,7 @@ export class User implements UserBase {
   phone: string;
 
   @Prop()
-  @Field()
+  @Field(() => UserRole)
   role: UserRole;
 
   @Prop()

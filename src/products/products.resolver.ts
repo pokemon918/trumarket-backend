@@ -6,6 +6,7 @@ import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './schemas/product.schema';
 import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { UserRole } from 'src/users/schemas/user.schema';
+import { LangSearch } from 'src/global/dto/lang-search.input';
 
 @Resolver(() => Product)
 @HasRole(UserRole.admin)
@@ -14,8 +15,11 @@ export class ProductsResolver {
 
   @Query(() => [Product])
   @Public()
-  products() {
-    return this.productsService.getProducts();
+  products(
+    @Args('nameSearch', { nullable: true }) nameSearch?: LangSearch,
+    @Args('categoryId', { nullable: true }) categoryId?: string,
+  ) {
+    return this.productsService.getProducts(nameSearch, categoryId);
   }
 
   @Query(() => Product)
@@ -33,7 +37,7 @@ export class ProductsResolver {
   updateProduct(@Args('input') input: UpdateProductInput) {
     return this.productsService.updateProduct(input);
   }
-  
+
   @Mutation(() => Boolean)
   async deleteProduct(@Args('_id') _id: string) {
     return this.productsService.deleteProduct(_id);
