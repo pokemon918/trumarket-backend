@@ -1,5 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { LangString } from 'src/global/schemas/lang-string.schema';
 
 @ObjectType()
 @Schema({ timestamps: true })
@@ -9,19 +10,19 @@ export class Article {
 
   @Prop()
   @Field()
-  title: string;
+  thumbnail: string;
 
   @Prop()
   @Field()
-  content: string;
+  title: LangString;
+
+  @Prop()
+  @Field()
+  content: LangString;
   
   @Prop()
   @Field()
-  contentText: string;
-
-  @Prop()
-  @Field()
-  thumbnail: string;
+  contentText: LangString;
 
   @Field()
   createdAt: Date;

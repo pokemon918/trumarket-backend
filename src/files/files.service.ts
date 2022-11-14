@@ -18,25 +18,19 @@ const storageDest = join(__dirname, '../../files-storage');
 
 export const fileStorage = diskStorage({
   destination: (req, file, cb) => {
-    console.log('destination');
     cb(null, storageDest);
   },
   filename: async (req, file, cb) => {
-    console.log('filename', file);
     const name = (await randomBytesAsync(48)).toString('hex');
     const filename = (name + extname(file.originalname)).toLowerCase();
 
     const fileType = mime.getType(filename) ?? '';
 
     if (fileType.startsWith('image/') || fileType.startsWith('video/')) {
-      console.log('YESSS');
       cb(null, filename);
     } else {
-      console.log('Hiiioo');
       cb(new BadRequestException(), '');
     }
-
-    console.log('Yooooo');
   },
 });
 
