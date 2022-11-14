@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: trumarket
+      MONGO_INITDB_ROOT_PASSWORD: trumarket
+      MONGO_INITDB_DATABASE: trumarket
+    ports:
+      - 27019:27017
+    volumes:
+      - trumarket-mongo:/data/db
+    logging:
+      driver: none
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file: ./.env
+    ports:
+      - '$PORT:3000'
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+      - '/app/dist'
+    depends_on:
+      - mongo
+
+volumes:
+  trumarket-mongo:
