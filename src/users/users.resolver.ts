@@ -1,6 +1,6 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { CurUser } from 'src/auth/cur-user.decorator';
-import { Public } from 'src/auth/public.decorator';
+import { CurUser } from 'src/auth/decorators/cur-user.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
 

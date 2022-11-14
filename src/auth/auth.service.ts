@@ -13,7 +13,7 @@ import {
 } from 'src/users/schemas/pending-user.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
-import { CurUser } from './cur-user.decorator';
+import { CurUser } from './decorators/cur-user.decorator';
 import { FinalizeSignupInput, SignupInput } from './dto/signup.input';
 import { hash, compare } from 'bcrypt';
 import { CookieOptions } from 'express';
@@ -114,20 +114,6 @@ export class AuthService {
 
     return {
       token: await this.signToken(user),
-    };
-  }
-
-  async validateJwt(sub: string, xky: string): Promise<JwtUser | null> {
-    const existingUser = await this.userModel.findOne({
-      _id: sub,
-      accessKey: xky,
-    });
-
-    if (!existingUser) return null;
-
-    return {
-      id: existingUser._id,
-      role: existingUser.role,
     };
   }
 

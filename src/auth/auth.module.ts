@@ -3,8 +3,8 @@ import { PassportModule } from '@nestjs/passport/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
-import { GoogleStrategy } from './google.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
@@ -13,7 +13,7 @@ import {
 } from 'src/users/schemas/pending-user.schema';
 import { AuthResolver } from './auth.resolver';
 import { User, UserSchema } from 'src/users/schemas/user.schema';
-import { AuthMiddleware } from './auth.middleware';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 import { readFileSync } from 'fs';
 import {
   ResetPassword,

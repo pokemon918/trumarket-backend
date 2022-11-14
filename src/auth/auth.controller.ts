@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards, Res } from '@nestjs/common';
-import { GoogleOAuthGuard } from './google-oauth.guard';
-import { CurUser } from './cur-user.decorator';
+import { GoogleOAuthGuard } from './guards/google-oauth.guard';
+import { CurUser } from './decorators/cur-user.decorator';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { Public } from './public.decorator';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 @Public()

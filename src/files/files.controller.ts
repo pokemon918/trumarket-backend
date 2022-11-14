@@ -2,8 +2,6 @@ import {
   Controller,
   Post,
   UseInterceptors,
-  UploadedFile,
-  Query,
   Get,
   Param,
   Res,
@@ -12,9 +10,12 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { FilesService, fileStorage } from './files.service';
 import { Response } from 'express';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { HasRole } from 'src/auth/decorators/has-role.decorator';
+import { UserRole } from 'src/users/schemas/user.schema';
 
 @Controller('files')
+@HasRole(UserRole.admin)
 export class FilesController {
   constructor(private filesService: FilesService) {}
 

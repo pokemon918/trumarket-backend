@@ -1,11 +1,14 @@
 import { Query, Args, Mutation, Resolver } from '@nestjs/graphql';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
 import { ProductsService } from './products.service';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './schemas/product.schema';
+import { HasRole } from 'src/auth/decorators/has-role.decorator';
+import { UserRole } from 'src/users/schemas/user.schema';
 
 @Resolver(() => Product)
+@HasRole(UserRole.admin)
 export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) {}
 

@@ -1,12 +1,14 @@
 interface ExternalUser {
+  source: 'external';
   email: string;
   firstName: string;
   lastName: string;
 }
 
 interface JwtUser {
+  source: 'jwt';
   id: string;
-  role: 'buyer' | 'seller' | 'investor';
+  role: 'admin' | 'buyer' | 'seller' | 'investor';
 }
 
 declare namespace Express {

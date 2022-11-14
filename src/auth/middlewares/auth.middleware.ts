@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import { InjectModel } from '@nestjs/mongoose'
 import { NextFunction, Request, Response } from 'express'
 import { Model } from 'mongoose'
-import { User, UserDocument } from '../users/schemas/user.schema'
+import { User, UserDocument } from '../../users/schemas/user.schema'
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -47,6 +47,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     req.user = {
+      source: "jwt",
       id: user._id,
       role: user.role
     }
