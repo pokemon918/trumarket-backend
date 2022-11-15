@@ -2,19 +2,13 @@
 
 ## 1) Configure the environment variables
 
-Create `.env` file in the project root, then copy the content of `.env.example` and paste it on the created `.env` file.
+- Create `.env` file in the project root, then copy the content of `.env.example` and paste it on the created `.env` file.
 
-On the `.env` file change the value of `CONTACT_RECEIVER_MAIL` with your email.
+- On the `.env` file change the value of `CONTACT_RECEIVER_MAIL` with your email (e.g. your personal Gmail address).
 
-Also, feel free to change the value of the following variables (if you want to):
+- Also, feel free to change the value of `AUTH_FRONTEND_URL` variable (only if you want to).
 
-- `PORT`
-- `THIS_BACKEND_URL`
-- `COOKIES_BASE_DOMAIN`
-- `AUTH_FRONTEND_URL`
-- `CORS`
-
-The value of the other variable, leave them as them, you do not have to change them.
+The value of the other variables, leave them as them, you do not need to change them.
 
 ## 2) Generate RSA Keys
 navigate to the project root, then ran the following two commands
