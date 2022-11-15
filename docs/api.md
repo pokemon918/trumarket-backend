@@ -17,7 +17,7 @@ use this endpoint to upload files. This endpoint accept an array of uploading fi
 
 
 ## GraphQL APIs
-for the GraphQL APIs docs, [run the app in the development](./development.md) then open `/graphql` in the browser (e.g. `http://localhost:3030/graphql`).
+for the GraphQL APIs docs, [run the app in the development](./development.md) then open `/graphql` in the browser (e.g. `http://localhost:4090/graphql`).
 
 **GraphQL Playground**
 ![GraphQL Playground](./media/graphql-playground.png)
