@@ -13,6 +13,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { ArticlesModule } from './articles/articles.module';
 import { KeywordsModule } from './keywords/keywords.module';
 import { MailsModule } from './mails/mails.module';
+import { InvestmentsModule } from './investments/investments.module';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -34,6 +35,7 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     }),
     FilesModule,
     ProductsModule,
+    InvestmentsModule,
     CategoriesModule,
     ArticlesModule,
     KeywordsModule,
