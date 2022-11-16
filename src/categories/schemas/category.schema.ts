@@ -12,6 +12,10 @@ export class Category {
   @Field()
   @Prop()
   name: LangString;
+  
+  @Field()
+  @Prop()
+  thumbnail: string;
 
   @Field()
   createdAt: Date;

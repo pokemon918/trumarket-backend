@@ -5,4 +5,7 @@ import { LangStringI } from 'src/global/dto/lang-string.input';
 export class CreateCategoryInput {
   @Field()
   name: LangStringI;
+  
+  @Field()
+  thumbnail: string;
 }
