@@ -30,7 +30,7 @@ export class ProductTrace {
   description: LangString;
 
   @Field(() => [String])
-  gallery: string;
+  gallery: string[];
 }
 
 @ObjectType()

@@ -30,7 +30,7 @@ export class InvestmentTrace {
   description: LangString;
 
   @Field(() => [String])
-  gallery: string;
+  gallery: string[];
 }
 
 @ObjectType()

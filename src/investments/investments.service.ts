@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
+import { FilesService } from 'src/files/files.service';
 import { LangSearchI } from 'src/global/dto/lang-search.input';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
 import { CreateInvestmentInput } from './dto/create-investment.input';
@@ -12,6 +13,7 @@ export class InvestmentsService {
   constructor(
     @InjectModel(Investment.name)
     private investmentModel: Model<InvestmentDocument>,
+    private filesService: FilesService,
   ) {}
 
   getInvestments(nameSearch?: LangSearchI, categoryId?: string) {
@@ -62,7 +64,29 @@ export class InvestmentsService {
     return this.investmentModel.findOne({ _id }).populate('category');
   }
 
+  async deleteInvestmentFiles(investment: Investment) {
+    const fileUrls: string[] = [];
+
+    if (investment.thumbnail) fileUrls.push(investment.thumbnail);
+
+    investment.gallery.forEach((f) => fileUrls.push(f));
+    investment.traces.forEach((t) =>
+      t.gallery.forEach((f) => fileUrls.push(f)),
+    );
+    investment.certifications.forEach((f) => fileUrls.push(f));
+
+    const filenames = fileUrls.map(
+      (fileUrl) => fileUrl.split('/').slice(-1)[0],
+    );
+
+    await this.filesService.deleteFiles(filenames);
+  }
+
   async deleteInvestment(_id: string) {
+    const investment = await this.investmentModel.findOne({ _id });
+    if (!investment) return;
+
+    await this.deleteInvestmentFiles(investment);
     await this.investmentModel.deleteOne({ _id });
     return true;
   }

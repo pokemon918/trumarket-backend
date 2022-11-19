@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { LangStringI } from 'src/global/dto/lang-string.input';
+import { IsMongoId } from 'src/validators/is-mongo-id';
 import { InvestmentType } from '../schemas/investment.schema';
 
 @InputType()
@@ -29,6 +30,7 @@ export class CreateInvestmentInput {
   name: LangStringI;
 
   @Field()
+  @IsMongoId()
   categoryId: string;
 
   @Field()
