@@ -14,6 +14,8 @@ import { ArticlesModule } from './articles/articles.module';
 import { KeywordsModule } from './keywords/keywords.module';
 import { MailsModule } from './mails/mails.module';
 import { InvestmentsModule } from './investments/investments.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -41,7 +43,9 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     KeywordsModule,
     MailsModule,
   ],
+  controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

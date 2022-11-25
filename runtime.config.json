@@ -1,0 +1,8 @@
+{
+    "name": "api",
+    "script": "./dist/main.js",
+    "exec_mode": "fork",
+    "autorestart": true,
+    "restart_delay": 0
+  }
+  

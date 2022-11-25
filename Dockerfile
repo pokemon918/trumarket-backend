@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn", "start:dev"]
+RUN yarn build
+
+CMD ["yarn", "start:prod:pm2"]
