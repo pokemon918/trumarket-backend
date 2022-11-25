@@ -2,6 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FilesService } from 'src/files/files.service';
+import {
+  Investment,
+  InvestmentDocument,
+} from 'src/investments/schemas/investment.schema';
 import { Product, ProductDocument } from 'src/products/schemas/product.schema';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
 import { CreateCategoryInput } from './dto/create-category.input';
@@ -15,6 +19,8 @@ export class CategoriesService {
     private categoryModel: Model<CategoryDocument>,
     @InjectModel(Product.name)
     private productModel: Model<ProductDocument>,
+    @InjectModel(Investment.name)
+    private investmentModel: Model<InvestmentDocument>,
     private filesService: FilesService,
   ) {}
 
@@ -53,7 +59,12 @@ export class CategoriesService {
       categoryId: _id,
     });
 
-    if (categoryProducts !== 0) throw new BadRequestException();
+    const categoryInvestments = await this.investmentModel.count({
+      categoryId: _id,
+    });
+
+    if (categoryProducts !== 0 || categoryInvestments !== 0)
+      throw new BadRequestException();
 
     const category = await this.categoryModel.findOne({ _id });
     if (!category) return true;
