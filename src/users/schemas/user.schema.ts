@@ -1,5 +1,6 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { GraphQLJSONObject } from 'graphql-type-json';
 import { Document } from 'mongoose';
 
 export enum UserRoleInput {
@@ -54,6 +55,14 @@ export class User implements UserBase {
   @Prop()
   @Field()
   phone: string;
+
+  @Field({ nullable: true })
+  @Prop()
+  website?: string;
+
+  @Field(() => GraphQLJSONObject)
+  @Prop({ type: Object })
+  commercialInfo: Record<string, any>;
 
   @Prop()
   @Field(() => UserRole)

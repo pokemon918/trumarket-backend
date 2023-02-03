@@ -1,6 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { IsEmail, MinLength, MaxLength, Length } from 'class-validator';
 import { UserRoleInput } from 'src/users/schemas/user.schema';
+import { GraphQLJSONObject } from 'graphql-type-json';
 
 @InputType()
 class SignupBase {
@@ -20,6 +21,12 @@ class SignupBase {
   @MinLength(4)
   @MaxLength(24)
   phone: string;
+
+  @Field({ nullable: true })
+  website?: string;
+
+  @Field(() => GraphQLJSONObject)
+  commercialInfo: Record<string, any>;
 
   @Field(() => UserRoleInput)
   role: UserRoleInput;
