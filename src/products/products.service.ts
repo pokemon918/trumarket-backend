@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
+import { Category, CategoryDocument } from 'src/categories/schemas/category.schema';
 import { FilesService } from 'src/files/files.service';
 import { LangSearchI } from 'src/global/dto/lang-search.input';
 import removeNullishAttrs from 'src/utils/removeNullishAttrs';
@@ -13,6 +14,8 @@ export class ProductsService {
   constructor(
     @InjectModel(Product.name)
     private productModel: Model<ProductDocument>,
+    @InjectModel(Category.name)
+    private categoryModel: Model<CategoryDocument>,
     private filesService: FilesService,
   ) {}
 
@@ -29,11 +32,11 @@ export class ProductsService {
       conditions.categoryId = categoryId;
     }
 
-    return this.productModel.find(conditions).populate('category');
+    return this.productModel.find(conditions);
   }
 
   getProduct(_id: string) {
-    return this.productModel.findOne({ _id }).populate('category');
+    return this.productModel.findOne({ _id });
   }
 
   async createProduct(input: CreateProductInput) {
@@ -45,7 +48,7 @@ export class ProductsService {
       },
     });
 
-    return this.productModel.findOne({ _id }).populate('category');
+    return this.productModel.findOne({ _id });
   }
 
   async updateProduct({ _id, ...input }: UpdateProductInput) {
@@ -61,7 +64,7 @@ export class ProductsService {
 
     await this.productModel.updateOne({ _id }, updated);
 
-    return this.productModel.findOne({ _id }).populate('category');
+    return this.productModel.findOne({ _id });
   }
 
   async deleteProductFiles(product: Product) {
@@ -87,5 +90,9 @@ export class ProductsService {
     await this.productModel.deleteOne({ _id });
     await this.deleteProductFiles(product);
     return true;
+  }
+
+  async getProductCategory(categoryId: string) {
+    return this.categoryModel.findOne({ _id: categoryId });
   }
 }

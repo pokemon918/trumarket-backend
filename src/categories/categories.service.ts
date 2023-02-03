@@ -74,4 +74,8 @@ export class CategoriesService {
 
     return true;
   }
+
+  async getCategoryProducts(categoryId: string) {
+    return this.productModel.find({ categoryId });
+  }
 }

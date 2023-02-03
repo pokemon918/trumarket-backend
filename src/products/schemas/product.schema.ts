@@ -43,11 +43,11 @@ export class Product {
   @Field()
   name: LangString;
 
-  @Prop({ type: Types.ObjectId })
+  @Prop()
   @Field()
   categoryId: string;
 
-  @Field()
+  @Field(() => Category)
   category: Category;
 
   @Prop()
@@ -107,15 +107,4 @@ export class Product {
 
 export type ProductDocument = Product & Document;
 
-export const ProductSchema = (() => {
-  const schema = SchemaFactory.createForClass(Product);
-
-  schema.virtual('category', {
-    ref: Category.name,
-    localField: 'categoryId',
-    foreignField: '_id',
-    justOne: true,
-  });
-
-  return schema;
-})();
+export const ProductSchema = SchemaFactory.createForClass(Product);
