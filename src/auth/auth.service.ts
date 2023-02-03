@@ -89,17 +89,18 @@ export class AuthService {
 
     return {
       token: await this.signToken(user),
+      user,
     };
   }
 
   // auth (signup/login) via google
   async handleGoogleRedirect(@CurUser() user: ExternalUser): Promise<{
     redirectUrl: string;
-    cookie?: {
+    cookies?: {
       name: string;
       value: string;
       options: CookieOptions;
-    };
+    }[];
   }> {
     const existingUser = await this.userModel.findOne({
       email: user.email,
@@ -110,22 +111,29 @@ export class AuthService {
 
       const YEAR = 1000 * 60 * 60 * 24 * 365;
 
+      const cookieOptions = {
+        domain:
+          cookiesBaseDomain !== 'localhost'
+            ? `.${cookiesBaseDomain}`
+            : cookiesBaseDomain,
+        path: '/',
+        secure: cookiesBaseDomain !== 'localhost',
+        expires: new Date(Date.now() + YEAR),
+        httpOnly: false,
+      };
+
+      const tokenUser = JSON.stringify({
+        _id: existingUser._id,
+        fullName: existingUser.fullName,
+        role: existingUser.role,
+      });
+
       return {
         redirectUrl: authUrl,
-        cookie: {
-          name: 'token',
-          value: token,
-          options: {
-            domain:
-              cookiesBaseDomain !== 'localhost'
-                ? `.${cookiesBaseDomain}`
-                : cookiesBaseDomain,
-            path: '/',
-            secure: cookiesBaseDomain !== 'localhost',
-            expires: new Date(Date.now() + YEAR),
-            httpOnly: false,
-          },
-        },
+        cookies: [
+          { name: 'token', value: token, options: cookieOptions },
+          { name: 'token_user', value: tokenUser, options: cookieOptions },
+        ],
       };
     }
 
@@ -149,6 +157,7 @@ export class AuthService {
 
     return {
       token: await this.signToken(user),
+      user,
     };
   }
 
@@ -166,6 +175,7 @@ export class AuthService {
 
     return {
       token: await this.signToken(user),
+      user,
     };
   }
 

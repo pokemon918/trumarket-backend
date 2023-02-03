@@ -16,12 +16,13 @@ export class AuthController {
     @CurUser() user: ExternalUser,
     @Res() res: Response,
   ) {
-    const { redirectUrl, cookie } = await this.authService.handleGoogleRedirect(
-      user,
-    );
+    const { redirectUrl, cookies } =
+      await this.authService.handleGoogleRedirect(user);
 
-    if (cookie) {
-      res.cookie(cookie.name, cookie.value, cookie.options);
+    if (cookies) {
+      cookies.forEach((cookie) => {
+        res.cookie(cookie.name, cookie.value, cookie.options);
+      });
     }
 
     res.redirect(redirectUrl);
