@@ -24,8 +24,8 @@ export class ProductOfferPriceInput {
 
 @InputType()
 export class ProductTraceInput {
-  @Field(() => ProductType)
-  type: ProductType;
+  @Field()
+  title: LangStringI;
 
   @Field()
   description: LangStringI;

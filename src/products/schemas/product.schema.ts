@@ -32,8 +32,8 @@ registerEnumType(ProductType, { name: 'ProductType' });
 
 @ObjectType()
 export class ProductTrace {
-  @Field(() => ProductType)
-  type: ProductType;
+  @Field()
+  title: LangString;
 
   @Field()
   description: LangString;
