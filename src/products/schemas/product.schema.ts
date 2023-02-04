@@ -13,6 +13,15 @@ export class ProductSpecs {
   value: LangString;
 }
 
+@ObjectType()
+export class ProductOfferPrice {
+  @Field()
+  name: LangString;
+
+  @Field()
+  value: LangString;
+}
+
 export enum ProductType {
   field = 'field',
   packing = 'packing',
@@ -71,8 +80,8 @@ export class Product {
   description: LangString;
 
   @Prop()
-  @Field()
-  offerPrices: LangString;
+  @Field(() => [ProductOfferPrice])
+  offerPrices: ProductOfferPrice;
 
   @Prop()
   @Field()

@@ -12,6 +12,16 @@ export class ProductSpecsInput {
   value: LangStringI;
 }
 
+
+@InputType()
+export class ProductOfferPriceInput {
+  @Field()
+  name: LangStringI;
+
+  @Field()
+  value: LangStringI;
+}
+
 @InputType()
 export class ProductTraceInput {
   @Field(() => ProductType)
@@ -48,8 +58,8 @@ export class CreateProductInput {
   @Field()
   description: LangStringI;
 
-  @Field()
-  offerPrices: LangStringI;
+  @Field(() => [ProductOfferPriceInput])
+  offerPrices: ProductOfferPriceInput[];
 
   @Field()
   thumbnail: string;
