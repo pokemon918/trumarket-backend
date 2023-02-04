@@ -64,4 +64,12 @@ export class UsersService {
       _id: user._id,
     });
   }
+
+  async getUsers(): Promise<User[]> {
+    return this.userModel.find();
+  }
+
+  async getUser(userId: string): Promise<User | null> {
+    return this.userModel.findOne({ _id: userId });
+  }
 }
