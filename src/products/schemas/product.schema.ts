@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Category } from 'src/categories/schemas/category.schema';
@@ -66,6 +66,10 @@ export class Product {
   @Prop()
   @Field()
   hsCode: LangString;
+
+  @Prop()
+  @Field(() => [Int])
+  harvestingMonths: number[]
 
   @Prop()
   @Field()

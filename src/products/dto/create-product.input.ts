@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { LangStringI } from 'src/global/dto/lang-string.input';
 import { IsMongoId } from 'src/validators/is-mongo-id';
 import { ProductType } from '../schemas/product.schema';
@@ -11,7 +11,6 @@ export class ProductSpecsInput {
   @Field()
   value: LangStringI;
 }
-
 
 @InputType()
 export class ProductOfferPriceInput {
@@ -48,6 +47,9 @@ export class CreateProductInput {
 
   @Field()
   hsCode: LangStringI;
+
+  @Field(() => [Int])
+  harvestingMonths: number[];
 
   @Field()
   price: number;
