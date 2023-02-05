@@ -15,7 +15,11 @@ export class ArticlesService {
     private filesService: FilesService,
   ) {}
 
-  findAll(titleSearch?: LangSearchI, keywordId?: string) {
+  findAll(
+    titleSearch?: LangSearchI,
+    keywordId?: string,
+    descCreatedAt?: boolean,
+  ) {
     const conditions: FilterQuery<ArticleDocument> = {};
 
     if (titleSearch) {
@@ -28,7 +32,10 @@ export class ArticlesService {
       conditions.keywordsIds = { $in: [keywordId] };
     }
 
-    return this.articleModel.find(conditions).populate('keywords');
+    return this.articleModel
+      .find(conditions)
+      .sort({ createdAt: descCreatedAt ? -1 : 1 })
+      .populate('keywords');
   }
 
   findOne(_id: string) {

@@ -26,8 +26,13 @@ export class ProductsResolver {
   products(
     @Args('nameSearch', { nullable: true }) nameSearch?: LangSearchI,
     @Args('categoryId', { nullable: true }) categoryId?: string,
+    @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean,
   ) {
-    return this.productsService.getProducts(nameSearch, categoryId);
+    return this.productsService.getProducts(
+      nameSearch,
+      categoryId,
+      descCreatedAt,
+    );
   }
 
   @Query(() => Product, { nullable: true })

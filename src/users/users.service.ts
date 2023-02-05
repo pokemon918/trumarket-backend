@@ -65,8 +65,8 @@ export class UsersService {
     });
   }
 
-  async getUsers(): Promise<User[]> {
-    return this.userModel.find();
+  async getUsers(descCreatedAt?: boolean): Promise<User[]> {
+    return this.userModel.find().sort({ createdAt: descCreatedAt ? -1 : 1 });
   }
 
   async getUser(userId: string): Promise<User | null> {

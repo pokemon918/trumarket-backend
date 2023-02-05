@@ -18,8 +18,9 @@ export class ArticlesResolver {
   articles(
     @Args('titleSearch', { nullable: true }) titleSearch?: LangSearchI,
     @Args('keywordId', { nullable: true }) keywordId?: string,
+    @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean,
   ) {
-    return this.articlesService.findAll(titleSearch, keywordId);
+    return this.articlesService.findAll(titleSearch, keywordId, descCreatedAt);
   }
 
   @Query(() => Article)

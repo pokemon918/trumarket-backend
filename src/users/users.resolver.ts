@@ -17,8 +17,8 @@ export class UsersResolver {
   }
 
   @Query(() => [User])
-  users() {
-    return this.userService.getUsers();
+  users(@Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean) {
+    return this.userService.getUsers(descCreatedAt);
   }
 
   @Query(() => User)
