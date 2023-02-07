@@ -93,6 +93,11 @@ export class AuthService {
     };
   }
 
+  async registered(email: string) {
+    const existingUser = await this.userModel.findOne({ email });
+    return !!existingUser
+  }
+
   // auth (signup/login) via google
   async handleGoogleRedirect(@CurUser() user: ExternalUser): Promise<{
     redirectUrl: string;
@@ -122,17 +127,10 @@ export class AuthService {
         httpOnly: false,
       };
 
-      const tokenUser = JSON.stringify({
-        _id: existingUser._id,
-        fullName: existingUser.fullName,
-        role: existingUser.role,
-      });
-
       return {
         redirectUrl: authUrl,
         cookies: [
-          { name: 'token', value: token, options: cookieOptions },
-          { name: 'token_user', value: tokenUser, options: cookieOptions },
+          { name: 'fulfillment-token', value: token, options: cookieOptions },
         ],
       };
     }

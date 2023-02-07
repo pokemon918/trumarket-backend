@@ -22,6 +22,11 @@ export class AuthResolver {
     return this.authService.finalizeSignup(input);
   }
 
+  @Mutation(() => Boolean)
+  async registered(@Args('email') email: string): Promise<boolean> {
+    return this.authService.registered(email);
+  }
+
   @Mutation(() => Auth)
   async login(@Args('input') input: LoginInput): Promise<Auth> {
     return this.authService.login(input);
