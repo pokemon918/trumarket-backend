@@ -130,7 +130,7 @@ export class AuthService {
       return {
         redirectUrl: authUrl,
         cookies: [
-          { name: 'fulfillment-token', value: token, options: cookieOptions },
+          { name: 'fulfillment_token', value: token, options: cookieOptions },
         ],
       };
     }
