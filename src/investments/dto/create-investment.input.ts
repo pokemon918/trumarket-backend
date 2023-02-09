@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { LangStringI } from 'src/global/dto/lang-string.input';
 import { IsMongoId } from 'src/validators/is-mongo-id';
 import { InvestmentType } from '../schemas/investment.schema';
@@ -47,6 +47,9 @@ export class CreateInvestmentInput {
 
   @Field()
   hsCode: LangStringI;
+
+  @Field(() => [Int])
+  harvestingMonths: number[];
 
   @Field()
   estimatedReturn: number;

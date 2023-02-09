@@ -3,7 +3,10 @@ import { PassportModule } from '@nestjs/passport/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
-import { GoogleStrategy } from './strategies/google.strategy';
+import {
+  FulfillmentGoogleStrategy,
+  InvestmentGoogleStrategy,
+} from './strategies/google.strategy';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
@@ -47,7 +50,12 @@ const privateKey = readFileSync(
       },
     }),
   ],
-  providers: [AuthService, GoogleStrategy, AuthResolver],
+  providers: [
+    AuthService,
+    FulfillmentGoogleStrategy,
+    InvestmentGoogleStrategy,
+    AuthResolver,
+  ],
   exports: [AuthService, JwtModule, MongooseModule],
   controllers: [AuthController],
 })

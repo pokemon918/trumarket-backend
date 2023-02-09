@@ -1,4 +1,11 @@
-import { Query, Args, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Query,
+  Args,
+  Mutation,
+  Resolver,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { InvestmentsService } from './investments.service';
 import { CreateInvestmentInput } from './dto/create-investment.input';
@@ -46,5 +53,10 @@ export class InvestmentsResolver {
   @Mutation(() => Boolean)
   async deleteInvestment(@Args('_id') _id: string) {
     return this.investmentsService.deleteInvestment(_id);
+  }
+
+  @ResolveField()
+  async relatedInvestments(@Parent() investment: Investment) {
+    return this.investmentsService.getRelatedInvestments(investment);
   }
 }

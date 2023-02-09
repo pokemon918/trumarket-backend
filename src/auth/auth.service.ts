@@ -22,10 +22,23 @@ import {
   ResetPasswordDocument,
 } from './schemas/reset-password.schema';
 
-const { AUTH_FRONTEND_URL: authUrl, COOKIES_BASE_DOMAIN: cookiesBaseDomain } =
-  process.env as {
-    [k: string]: string;
-  };
+const {
+  FULFILLMENT_URL: fulfillmentUrl,
+  INVESTMENT_URL: investmentUrl,
+  COOKIES_BASE_DOMAIN: cookiesBaseDomain,
+} = process.env as {
+  [k: string]: string;
+};
+
+const apps = {
+  fulfillment: fulfillmentUrl,
+  investment: investmentUrl,
+};
+
+const appRoles = {
+  fulfillment: ['admin', 'buyer', 'seller'],
+  investment: ['investor'],
+};
 
 const randomBytesAsync = promisify(randomBytes);
 
@@ -54,9 +67,7 @@ export class AuthService {
     });
   }
 
-  private async sendResetLink(to: string, resetToken: string): Promise<void> {
-    const resetLink = `${authUrl}/enter-new-password/${resetToken}`;
-
+  private async sendResetLink(to: string, resetLink: string): Promise<void> {
     await sendMail({
       to,
       subject: "Reset your account's password on TRU Market",
@@ -95,11 +106,14 @@ export class AuthService {
 
   async registered(email: string) {
     const existingUser = await this.userModel.findOne({ email });
-    return !!existingUser
+    return !!existingUser;
   }
 
   // auth (signup/login) via google
-  async handleGoogleRedirect(@CurUser() user: ExternalUser): Promise<{
+  async handleGoogleRedirect(
+    @CurUser() user: ExternalUser,
+    appType: 'fulfillment' | 'investment',
+  ): Promise<{
     redirectUrl: string;
     cookies?: {
       name: string;
@@ -127,12 +141,18 @@ export class AuthService {
         httpOnly: false,
       };
 
-      return {
-        redirectUrl: authUrl,
-        cookies: [
-          { name: 'fulfillment_token', value: token, options: cookieOptions },
-        ],
-      };
+      if (appRoles[appType].includes(existingUser.role)) {
+        return {
+          redirectUrl: apps[appType],
+          cookies: [
+            { name: `${appType}_token`, value: token, options: cookieOptions },
+          ],
+        };
+      } else {
+        return {
+          redirectUrl: `${apps[appType]}/login?mismatchingRole=${existingUser.role}`,
+        };
+      }
     }
 
     const puToken = await this.usersService.createPendingUser(user.email);
@@ -143,7 +163,7 @@ export class AuthService {
       encodeURIComponent(user.lastName);
 
     return {
-      redirectUrl: `${authUrl}/signup?pendingUserToken=${puToken}&fullName=${fullName}`,
+      redirectUrl: `${apps[appType]}/finalize-signup?pendingUserToken=${puToken}&fullName=${fullName}`,
     };
   }
 
@@ -200,7 +220,12 @@ export class AuthService {
       expiredAt,
     });
 
-    await this.sendResetLink(user.email, resetToken);
+    const appUrl =
+      apps[user.role === 'investor' ? 'investment' : 'fulfillment'];
+
+    const resetLink = `${appUrl}/enter-new-password/${resetToken}`;
+
+    await this.sendResetLink(user.email, resetLink);
 
     return true;
   }

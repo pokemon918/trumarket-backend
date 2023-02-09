@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Category } from 'src/categories/schemas/category.schema';
@@ -67,6 +67,10 @@ export class Investment {
   @Field()
   hsCode: LangString;
 
+  @Field(() => [Int])
+  @Prop()
+  harvestingMonths: number[];
+
   @Prop()
   @Field()
   goalAmount: number;
@@ -122,6 +126,9 @@ export class Investment {
   @Prop()
   @Field(() => [String])
   certifications: string[];
+
+  @Field(() => [Investment])
+  relatedInvestments: Investment[];
 
   @Field()
   createdAt: Date;

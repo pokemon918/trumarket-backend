@@ -39,7 +39,7 @@ export class InvestmentsService {
       .sort({ createdAt: descCreatedAt ? -1 : 1 });
   }
 
-  getInvestment(_id: string) {
+  async getInvestment(_id: string): Promise<Investment | null> {
     return this.investmentModel.findOne({ _id }).populate('category');
   }
 
@@ -96,5 +96,15 @@ export class InvestmentsService {
     await this.deleteInvestmentFiles(investment);
     await this.investmentModel.deleteOne({ _id });
     return true;
+  }
+
+  async getRelatedInvestments({ _id, categoryId }: Investment) {
+    const investments = await this.investmentModel
+      .find({ categoryId })
+      .populate('category');
+
+    return investments.filter(
+      (cInvestment) => String(cInvestment._id) !== String(_id),
+    );
   }
 }
