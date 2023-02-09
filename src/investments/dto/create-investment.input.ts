@@ -13,9 +13,18 @@ export class InvestmentSpecsInput {
 }
 
 @InputType()
+export class InvestmentOfferPriceInput {
+  @Field()
+  name: LangStringI;
+
+  @Field()
+  value: LangStringI;
+}
+
+@InputType()
 export class InvestmentTraceInput {
-  @Field(() => InvestmentType)
-  type: InvestmentType;
+  @Field()
+  title: LangStringI;
 
   @Field()
   description: LangStringI;
@@ -60,8 +69,8 @@ export class CreateInvestmentInput {
   @Field()
   description: LangStringI;
 
-  @Field()
-  offerPrices: LangStringI;
+  @Field(() => [InvestmentOfferPriceInput])
+  offerPrices: InvestmentOfferPriceInput[];
 
   @Field()
   thumbnail: string;

@@ -13,6 +13,15 @@ export class InvestmentSpecs {
   value: LangString;
 }
 
+@ObjectType()
+export class InvestmentOfferPrice {
+  @Field()
+  name: LangString;
+
+  @Field()
+  value: LangString;
+}
+
 export enum InvestmentType {
   field = 'field',
   packing = 'packing',
@@ -23,8 +32,8 @@ registerEnumType(InvestmentType, { name: 'InvestmentType' });
 
 @ObjectType()
 export class InvestmentTrace {
-  @Field(() => InvestmentType)
-  type: InvestmentType;
+  @Field()
+  title: LangString;
 
   @Field()
   description: LangString;
@@ -87,8 +96,8 @@ export class Investment {
   description: LangString;
 
   @Prop()
-  @Field()
-  offerPrices: LangString;
+  @Field(() => [InvestmentOfferPrice])
+  offerPrices: InvestmentOfferPrice[];
 
   @Prop()
   @Field()

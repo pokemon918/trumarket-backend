@@ -16,7 +16,11 @@ export class InvestmentsService {
     private filesService: FilesService,
   ) {}
 
-  getInvestments(nameSearch?: LangSearchI, categoryId?: string) {
+  getInvestments(
+    nameSearch?: LangSearchI,
+    categoryId?: string,
+    descCreatedAt?: boolean,
+  ) {
     const conditions: FilterQuery<InvestmentDocument> = {};
 
     if (nameSearch) {
@@ -29,7 +33,10 @@ export class InvestmentsService {
       conditions.categoryId = categoryId;
     }
 
-    return this.investmentModel.find(conditions).populate('category');
+    return this.investmentModel
+      .find(conditions)
+      .populate('category')
+      .sort({ createdAt: descCreatedAt ? -1 : 1 });
   }
 
   getInvestment(_id: string) {

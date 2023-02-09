@@ -18,8 +18,13 @@ export class InvestmentsResolver {
   investments(
     @Args('nameSearch', { nullable: true }) nameSearch?: LangSearchI,
     @Args('categoryId', { nullable: true }) categoryId?: string,
+    @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean,
   ) {
-    return this.investmentsService.getInvestments(nameSearch, categoryId);
+    return this.investmentsService.getInvestments(
+      nameSearch,
+      categoryId,
+      descCreatedAt,
+    );
   }
 
   @Query(() => Investment)
