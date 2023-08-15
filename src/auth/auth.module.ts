@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import {
   FulfillmentGoogleStrategy,
   InvestmentGoogleStrategy,
+  AdminGoogleStrategy,
 } from './strategies/google.strategy';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -54,6 +55,7 @@ const privateKey = readFileSync(
     AuthService,
     FulfillmentGoogleStrategy,
     InvestmentGoogleStrategy,
+    AdminGoogleStrategy,
     AuthResolver,
   ],
   exports: [AuthService, JwtModule, MongooseModule],

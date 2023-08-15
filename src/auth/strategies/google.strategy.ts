@@ -57,3 +57,21 @@ export class InvestmentGoogleStrategy extends PassportStrategy(
     return formatProfile(profile);
   }
 }
+
+@Injectable()
+export class AdminGoogleStrategy extends PassportStrategy(
+  Strategy,
+  'google-admin',
+) {
+  constructor() {
+    super(getConfig('admin'));
+  }
+
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: any,
+  ): Promise<ExternalUser> {
+    return formatProfile(profile);
+  }
+}
