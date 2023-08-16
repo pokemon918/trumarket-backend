@@ -10,3 +10,8 @@ export class FulfillmentGoogleOAuthGuard extends AuthGuard(
 export class InvestmentGoogleOAuthGuard extends AuthGuard(
   'google-investment',
 ) {}
+
+@Injectable()
+export class AdminGoogleOAuthGuard extends AuthGuard(
+  'google-admin',
+) {}

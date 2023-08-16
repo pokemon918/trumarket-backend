@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards, Res } from '@nestjs/common';
-import { FulfillmentGoogleOAuthGuard, InvestmentGoogleOAuthGuard } from './guards/google-oauth.guard';
+import { FulfillmentGoogleOAuthGuard, InvestmentGoogleOAuthGuard, AdminGoogleOAuthGuard } from './guards/google-oauth.guard';
 import { CurUser } from './decorators/cur-user.decorator';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
@@ -13,7 +13,7 @@ export class AuthController {
   async handleGoogleAuthRedirect(
     user: ExternalUser,
     res: Response,
-    appType: 'fulfillment' | 'investment',
+    appType: 'fulfillment' | 'investment' | 'admin',
   ) {
     const { redirectUrl, cookies } =
       await this.authService.handleGoogleRedirect(user, appType);
@@ -43,5 +43,14 @@ export class AuthController {
     @Res() res: Response,
   ) {
     return this.handleGoogleAuthRedirect(user, res, 'investment');
+  }
+
+  @Get('google/admin')
+  @UseGuards(AdminGoogleOAuthGuard)
+  adminGoogleAuthRedirect(
+    @CurUser() user: ExternalUser,
+    @Res() res: Response,
+  ) {
+    return this.handleGoogleAuthRedirect(user, res, 'admin');
   }
 }

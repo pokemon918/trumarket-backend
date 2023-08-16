@@ -25,6 +25,7 @@ import {
 const {
   FULFILLMENT_URL: fulfillmentUrl,
   INVESTMENT_URL: investmentUrl,
+  ADMIN_URL: adminUrl,
   COOKIES_BASE_DOMAIN: cookiesBaseDomain,
 } = process.env as {
   [k: string]: string;
@@ -33,11 +34,13 @@ const {
 const apps = {
   fulfillment: fulfillmentUrl,
   investment: investmentUrl,
+  admin: adminUrl,
 };
 
 const appRoles = {
-  fulfillment: ['admin', 'buyer', 'seller'],
+  fulfillment: ['buyer', 'seller'],
   investment: ['investor'],
+  admin: ['admin'],
 };
 
 const randomBytesAsync = promisify(randomBytes);
@@ -112,7 +115,7 @@ export class AuthService {
   // auth (signup/login) via google
   async handleGoogleRedirect(
     @CurUser() user: ExternalUser,
-    appType: 'fulfillment' | 'investment',
+    appType: 'fulfillment' | 'investment' | 'admin',
   ): Promise<{
     redirectUrl: string;
     cookies?: {
@@ -221,7 +224,7 @@ export class AuthService {
     });
 
     const appUrl =
-      apps[user.role === 'investor' ? 'investment' : 'fulfillment'];
+      apps[user.role === 'investor' ? 'investment' : user.role === 'admin' ? 'admin' : 'fulfillment'];
 
     const resetLink = `${appUrl}/enter-new-password/${resetToken}`;
 
