@@ -55,6 +55,9 @@ export class CreateProductInput {
   price: number;
 
   @Field()
+  isSustainable: boolean;
+
+  @Field()
   bigTitle: LangStringI;
 
   @Field()

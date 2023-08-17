@@ -77,6 +77,10 @@ export class Product {
 
   @Prop()
   @Field()
+  isSustainable: boolean;
+
+  @Prop()
+  @Field()
   bigTitle: LangString;
 
   @Prop()
