@@ -14,14 +14,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Cloning repo
-        uses: actions/checkout@v2
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@master
         with:
-          fetch-depth: 0
-
-      - name: Push to dokku
-        uses: dokku/github-action@master
-        with:
-          git_remote_url: 'ssh://dokku@api.trumarket.tech/api'
-          branch: 'main'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.KEY}}
+          script: |
+            cd trumarket-backend
+            git fetch
+            git pull origin main
+            echo 'Deployment to digital ocean finished'
