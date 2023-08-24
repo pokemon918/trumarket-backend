@@ -60,6 +60,22 @@ export class Contract {
 
   @Prop()
   @Field()
+  brandType: boolean;
+
+  @Prop()
+  @Field()
+  pluType: boolean;
+
+  @Prop()
+  @Field(() => [String])
+  certifications: [string];
+
+  @Prop()
+  @Field()
+  measure: boolean;
+
+  @Prop()
+  @Field()
   duration: number; // weeks 
 
   @Prop()
@@ -68,7 +84,7 @@ export class Contract {
 
   @Prop()
   @Field()
-  Return: string; // (percentage) or (annual return)
+  return: string; // (percentage) or (annual return)
 
   @Prop()
   @Field()
@@ -91,7 +107,7 @@ export class Contract {
 
   @Prop()
   @Field()
-  approvedDtae: Date;
+  approvedDate: Date;
   
   @Prop()
   @Field()

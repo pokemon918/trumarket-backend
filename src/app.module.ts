@@ -1,4 +1,5 @@
 import { CompaniesModule } from './companies/companies.module';
+import { ContractsModule } from "./contracts/contracts.module";
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -23,6 +24,7 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 @Module({
   imports: [
     CompaniesModule,
+    ContractsModule,
     AuthModule,
     UsersModule,
     MongooseModule.forRoot(MONGO_URI),

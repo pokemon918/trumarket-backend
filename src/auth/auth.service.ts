@@ -126,6 +126,7 @@ export class AuthService {
       companyName: 'admin',
       country: 'PE',
       role: 'admin',
+      phone: '51111111111',
       accessKey: Date.now().toString(),
     });
 

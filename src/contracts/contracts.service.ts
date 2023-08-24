@@ -98,6 +98,6 @@ export class ContractsService {
   }
 
   async getContractProduct(productId: string) {
-    return this.contractModel.findOne({ _id: productId });
+    return this.productModel.findOne({ _id: productId });
   }
 }
