@@ -27,11 +27,13 @@ import { Product } from 'src/products/schemas/product.schema';
     //   @Args('nameSearch', { nullable: true }) nameSearch?: LangSearchI,
       @Args('productId', { nullable: true }) productId?: string,
       @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean,
+      @Args('isExisting', { nullable: true }) isExisting?: boolean,
     ) {
       return this.contractsService.getContracts(
         // nameSearch,
         productId,
         descCreatedAt,
+        isExisting,
       );
     }
   
