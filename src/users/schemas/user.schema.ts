@@ -60,9 +60,9 @@ export class User implements UserBase {
   @Prop()
   website?: string;
 
-  @Field(() => GraphQLJSONObject)
+  @Field(() => GraphQLJSONObject, { nullable: true })
   @Prop({ type: Object })
-  commercialInfo: Record<string, any>;
+  commercialInfo?: Record<string, any>;
 
   @Prop()
   @Field(() => UserRole)

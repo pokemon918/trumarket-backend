@@ -9,16 +9,22 @@ export class CreateContractInput {
   productId: string;
 
   @Field()
-  portOfLoading: string;
+  isExisting: boolean;
 
   @Field()
-  portOfArrival: string;
+  portOfLoading: string; // input + country; distinguished by '+'
+
+  @Field()
+  portOfArrival: string; // input + country; distinguished by '+'
 
   @Field()
   departureDate: Date;
 
   @Field()
   offerPrice: number;
+
+  @Field()
+  unit: string;
 
   @Field()
   quantity: number;

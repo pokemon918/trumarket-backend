@@ -26,8 +26,9 @@ export class ContractsService {
     // nameSearch?: LangSearchI,
     productId?: string,
     descCreatedAt?: boolean,
+    isExisting?: boolean,
   ) {
-    const conditions: FilterQuery<ProductDocument> = {};
+    const conditions: FilterQuery<ContractDocument> = {};
 
     // if (nameSearch) {
     //   const value = nameSearch.value.trim().replace(/\s+/, ' ');
@@ -37,6 +38,12 @@ export class ContractsService {
 
     if (productId) {
       conditions.productId = productId;
+    }
+
+    if (isExisting) {
+      conditions.isExisting = true;
+    } else {
+      conditions.isExisting = false;
     }
 
     return this.contractModel

@@ -20,6 +20,10 @@ export class Contract {
 
   @Prop()
   @Field()
+  isExisting: boolean;
+
+  @Prop()
+  @Field()
   portOfLoading: string;
 
   @Prop()
@@ -33,6 +37,10 @@ export class Contract {
   @Prop()
   @Field()
   offerPrice: number;
+
+  @Prop()
+  @Field()
+  unit: string;
 
   @Prop()
   @Field()
