@@ -4,7 +4,7 @@ import { UserRole } from "src/users/schemas/user.schema";
 import { FilesService } from "./files.service";
 
 @Resolver()
-@HasRole(UserRole.admin)
+@HasRole(UserRole.admin, UserRole.buyer)
 export class FilesResolver {
   constructor(private filesService: FilesService) { }
 

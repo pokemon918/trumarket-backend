@@ -15,7 +15,7 @@ import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { UserRole } from 'src/users/schemas/user.schema';
 
 @Controller('files')
-@HasRole(UserRole.admin)
+@HasRole(UserRole.admin, UserRole.buyer)
 export class FilesController {
   constructor(private filesService: FilesService) {}
 
