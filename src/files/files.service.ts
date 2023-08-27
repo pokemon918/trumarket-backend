@@ -23,10 +23,10 @@ export const fileStorage = diskStorage({
 
     const fileType = mime.getType(filename) ?? '';
 
-    if (fileType.startsWith('image/') || fileType.startsWith('video/')) {
+    if (fileType.startsWith('image/') || fileType.startsWith('video/') || fileType.includes('pdf') || fileType.includes('msword')) {
       cb(null, filename);
     } else {
-      cb(new BadRequestException(), '');
+      cb(new BadRequestException(), fileType);
     }
   },
 });
