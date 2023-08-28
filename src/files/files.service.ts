@@ -24,7 +24,7 @@ export const fileStorage = diskStorage({
     const fileType = mime.getType(filename) ?? '';
 
     if (fileType.startsWith('image/') || fileType.startsWith('video/') || fileType.includes('pdf') || fileType.includes('msword')) {
-      cb(null, filename);
+      cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + file.originalname)
     } else {
       cb(new BadRequestException(), fileType);
     }

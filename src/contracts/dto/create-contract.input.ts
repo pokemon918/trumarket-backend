@@ -24,9 +24,6 @@ export class CreateContractInput {
   offerPrice: number;
 
   @Field()
-  unit: string;
-
-  @Field()
   quantity: number;
 
   @Field()
@@ -85,6 +82,9 @@ export class CreateContractInput {
 
   @Field({ nullable: true })
   paymentMethod?: string;
+
+  @Field()
+  status: string;
 
   @Field({ nullable: true })
   fundedDate?: Date;

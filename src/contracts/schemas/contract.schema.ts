@@ -40,10 +40,6 @@ export class Contract {
 
   @Prop()
   @Field()
-  unit: string;
-
-  @Prop()
-  @Field()
   quantity: number;
 
   @Prop()
@@ -63,7 +59,7 @@ export class Contract {
   description: LangString;
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   attachment: string;
 
   @Prop()
@@ -83,51 +79,55 @@ export class Contract {
   measure: boolean;
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   duration: number; // weeks 
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   risk: string; // ['A', 'B', 'C', 'D']
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   return: string; // (percentage) or (annual return)
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   supplierId: string;
 
   @Field(() => User)
   supplier: User;
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   requiredAmount: number;
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   nftLink: string; // website link
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   capitalFunded: number; // money => refer to step (3): Contract is visible for investors 
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   approvedDate: Date;
   
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   investedAmount: number; // (user input)
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   paymentMethod: string;
 
   @Prop()
-  @Field()
+  @Field({ nullable: true })
   fundedDate: Date;
+
+  @Prop()
+  @Field()
+  status: string; // 'pending', 'Publish', 'Not funded'
 
   @Field()
   createdAt: Date;
