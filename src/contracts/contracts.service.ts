@@ -68,6 +68,9 @@ export class ContractsService {
   }
 
   async updateContract({ _id, ...input }: UpdateContractInput) {
+
+    const contract = await this.contractModel.findOne({ _id });
+
     const updated = removeNullishAttrs({
       ...input,
       description: input.description
@@ -76,9 +79,11 @@ export class ContractsService {
             es: input.description.es.trim().replace(/\s+/, ' '),
           }
         : undefined,
-      approvedDate: input.status === 'Approved'
+        // @ts-ignore
+      approvedDate: input.status === 'Approved' && !contract.approvedDate
         ? new Date()
-        : undefined,
+        // @ts-ignore
+        : input.status === 'Approved' ? contract.approvedDate : undefined,
     });
 
     await this.contractModel.updateOne({ _id }, updated);
