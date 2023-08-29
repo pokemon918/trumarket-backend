@@ -112,6 +112,10 @@ export class Contract {
   @Prop()
   @Field({ nullable: true })
   approvedDate: Date;
+
+  @Prop()
+  @Field()
+  expirationDate: Date;
   
   @Prop()
   @Field({ nullable: true })

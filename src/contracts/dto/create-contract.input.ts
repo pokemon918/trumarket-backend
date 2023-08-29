@@ -76,6 +76,9 @@ export class CreateContractInput {
 
   @Field({ nullable: true })
   approvedDate?: Date;
+
+  @Field()
+  expirationDate: Date;
   
   @Field({ nullable: true })
   investedAmount?: number; // (user input)

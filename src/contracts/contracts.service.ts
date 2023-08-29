@@ -76,6 +76,9 @@ export class ContractsService {
             es: input.description.es.trim().replace(/\s+/, ' '),
           }
         : undefined,
+      approvedDate: input.status === 'Approved'
+        ? new Date()
+        : undefined,
     });
 
     await this.contractModel.updateOne({ _id }, updated);

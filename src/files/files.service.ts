@@ -23,7 +23,7 @@ export const fileStorage = diskStorage({
 
     const fileType = mime.getType(filename) ?? '';
 
-    if (fileType.startsWith('image/') || fileType.startsWith('video/') || fileType.includes('pdf') || fileType.includes('msword')) {
+    if (fileType.startsWith('image/') || fileType.startsWith('video/') || fileType.includes('pdf') || fileType.includes('msword') || fileType.includes('openxmlformats-officedocument.wordprocessingml.document')) {
       cb(null, filename)
     } else {
       cb(new BadRequestException(), fileType);
