@@ -165,7 +165,7 @@ export class AuthService {
       const cookieOptions = {
         domain:
           cookiesBaseDomain !== 'localhost'
-            ? `.${cookiesBaseDomain}`
+            ? `${appType}.${cookiesBaseDomain}`
             : cookiesBaseDomain,
         path: '/',
         secure: cookiesBaseDomain !== 'localhost',
