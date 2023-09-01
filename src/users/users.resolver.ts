@@ -1,4 +1,4 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { CurUser } from 'src/auth/decorators/cur-user.decorator';
 import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { Public } from 'src/auth/decorators/public.decorator';
@@ -24,5 +24,10 @@ export class UsersResolver {
   @Query(() => User)
   user(@Args('_id') _id: string) {
     return this.userService.getUser(_id);
+  }
+
+  @Mutation(() => Boolean)
+  deleteUser(@Args('_id') _id:string) {
+    return this.userService.deleteUser(_id);
   }
 }

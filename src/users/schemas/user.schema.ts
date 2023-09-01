@@ -3,12 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { GraphQLJSONObject } from 'graphql-type-json';
 import { Document } from 'mongoose';
 
-export enum UserRoleInput {
-  buyer = 'buyer',
-  seller = 'seller',
-  investor = 'investor',
-}
-
 export enum UserRole {
   admin = 'admin',
   buyer = 'buyer',
@@ -17,14 +11,13 @@ export enum UserRole {
 }
 
 registerEnumType(UserRole, { name: 'UserRole' });
-registerEnumType(UserRoleInput, { name: 'UserRoleInput' });
 
 export class UserBase {
   fullName: string;
   companyName: string;
   country: string;
   phone: string;
-  role: UserRole | UserRoleInput;
+  role: UserRole;
 }
 
 @ObjectType()

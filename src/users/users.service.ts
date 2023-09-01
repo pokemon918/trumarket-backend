@@ -72,4 +72,12 @@ export class UsersService {
   async getUser(userId: string): Promise<User | null> {
     return this.userModel.findOne({ _id: userId });
   }
+
+  async deleteUser(_id: string) {
+    const user = await this.userModel.findOne({ _id });
+    if (!user) return true;
+
+    await this.userModel.deleteOne({ _id });
+    return true;
+  }
 }
