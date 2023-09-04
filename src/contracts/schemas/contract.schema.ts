@@ -131,7 +131,7 @@ export class Contract {
 
   @Prop()
   @Field()
-  status: string; // 'Pending', 'Expired', 'Rejected', 'Funded', 'Approved'.
+  status: string; // 'Pending', 'Expired', 'Rejected', 'Funded', 'Not Funded', 'Approved'.
 
   @Field()
   createdAt: Date;

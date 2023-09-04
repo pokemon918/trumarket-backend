@@ -87,7 +87,7 @@ export class CreateContractInput {
   paymentMethod?: string;
 
   @Field()
-  status: string; // 'Pending', 'Expired', 'Rejected', 'Funded', 'Approved'.
+  status: string; // 'Pending', 'Expired', 'Rejected', 'Funded', 'Not Funded', 'Approved'.
 
   @Field({ nullable: true })
   fundedDate?: Date;
