@@ -13,6 +13,7 @@ async function bootstrap() {
     origin: CORS,
   });
   app.useGlobalPipes(new ValidationPipe());
+  app.use(bodyParser.json({ limit: '10mb' }));
   await app.listen(3000);
   console.log(`App is running on http://localhost:${PORT}`);
 }
