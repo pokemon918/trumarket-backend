@@ -27,7 +27,7 @@ export class FilesController {
   }
 
   @Post('upload')
-  @UseInterceptors(FilesInterceptor('files', 20, { storage: fileStorage, limits: { fileSize: 10 * 1024 * 1024 } }))
+  @UseInterceptors(FilesInterceptor('files', 20, { storage: fileStorage }))
   uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     return this.filesService.handleUpload(files);
   }
