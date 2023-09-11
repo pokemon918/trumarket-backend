@@ -16,9 +16,21 @@ export class UsersResolver {
     return this.userService.findUserProfile(user);
   }
 
+  @Query(() => [Number])
+  @Public()
+  userStatistics() {
+      return this.userService.getStatistics()
+  }
+
   @Query(() => [User])
-  users(@Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean) {
-    return this.userService.getUsers(descCreatedAt);
+  users(
+    @Args('userType', { nullable: true }) userType?: string,
+    @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean
+  ) {
+    return this.userService.getUsers(
+      userType,
+      descCreatedAt
+    );
   }
 
   @Query(() => User)

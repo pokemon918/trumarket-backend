@@ -36,6 +36,12 @@ import {
         companyType,
       );
     }
+
+    @Query(() => [Number])
+    @Public()
+    companyStatistics() {
+        return this.companiesService.getStatistics()
+    }
   
     @Query(() => Company, { nullable: true })
     @Public()

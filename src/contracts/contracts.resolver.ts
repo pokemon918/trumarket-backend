@@ -36,6 +36,12 @@ import { Product } from 'src/products/schemas/product.schema';
         isExisting,
       );
     }
+
+    @Query(() => [Number])
+    @Public()
+    contractStatistics() {
+      return this.contractsService.getStatistics()
+    }
   
     @Query(() => Contract, { nullable: true })
     @Public()

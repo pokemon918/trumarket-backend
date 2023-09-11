@@ -21,6 +21,15 @@ constructor(
         private productModel: Model<ProductDocument>,
     ) {}
 
+    async getStatistics() {
+      const counts = await this.companyModel.aggregate([
+        { $group: { _id: '$companyType', count: { $sum: 1 } } },
+      ]);
+      const buyer = counts.find((c) => c._id === "Buyer")
+      const supplier = counts.find((c) => c._id === "Supplier")
+      return [buyer?buyer.count:0, supplier?supplier.count:0]
+    }
+
     getCompanies(
         nameSearch?: LangSearchI,
         productId?: string,

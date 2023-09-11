@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, FilterQuery } from 'mongoose';
 import genHex from 'src/utils/genHex';
 import {
   PendingUser,
@@ -16,6 +16,16 @@ export class UsersService {
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
   ) {}
+
+  async getStatistics() {
+    const counts = await this.userModel.aggregate([
+      { $group: { _id: '$role', count: { $sum: 1 } } },
+    ]);
+    const buyer = counts.find((c) => c._id === "buyer")
+    const supplier = counts.find((c) => c._id === "seller")
+    const investor = counts.find((c) => c._id === "investor")
+    return [buyer?buyer.count:0, supplier?supplier.count:0, investor?investor.count:0]
+  }
 
   async createPendingUser(email: string): Promise<string> {
     const pendingUser = await this.pendingUserModel.findOne({
@@ -65,8 +75,16 @@ export class UsersService {
     });
   }
 
-  async getUsers(descCreatedAt?: boolean): Promise<User[]> {
-    return this.userModel.find().sort({ createdAt: descCreatedAt ? -1 : 1 });
+  async getUsers(
+    userType?: string,
+    descCreatedAt?: boolean
+  ): Promise<User[]> {
+    const conditions: FilterQuery<UserDocument> = {};
+
+    if (userType) {
+      conditions.role = userType
+    }
+    return this.userModel.find(conditions).sort({ createdAt: descCreatedAt ? -1 : 1 });
   }
 
   async getUser(userId: string): Promise<User | null> {
