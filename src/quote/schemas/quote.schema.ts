@@ -42,7 +42,7 @@ export class Quote {
 
   @Prop()
   @Field()
-  volume: number;
+  quantity: number;
 
   @Prop()
   @Field()
