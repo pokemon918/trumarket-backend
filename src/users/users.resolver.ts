@@ -3,7 +3,7 @@ import { CurUser } from 'src/auth/decorators/cur-user.decorator';
 import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { User, UserRole } from './schemas/user.schema';
-import { UsersService } from './users.service';
+import { UsersService, updateInvestorInput } from './users.service';
 
 @Resolver(() => User)
 @HasRole(UserRole.admin)
@@ -24,11 +24,11 @@ export class UsersResolver {
 
   @Query(() => [User])
   users(
-    @Args('userType', { nullable: true }) userType?: string,
+    @Args('statusSearch', { nullable: true }) statusSearch?: string, // pending, validating, approved
     @Args('descCreatedAt', { nullable: true }) descCreatedAt?: boolean
   ) {
     return this.userService.getUsers(
-      userType,
+      statusSearch,
       descCreatedAt
     );
   }
@@ -36,6 +36,11 @@ export class UsersResolver {
   @Query(() => User)
   user(@Args('_id') _id: string) {
     return this.userService.getUser(_id);
+  }
+
+  @Mutation(() => Boolean)
+  updateInvestor(@Args('input') input: updateInvestorInput) {
+    return this.userService.updateInvestor(input)
   }
 
   @Mutation(() => Boolean)

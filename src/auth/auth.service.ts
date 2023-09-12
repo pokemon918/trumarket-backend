@@ -11,7 +11,6 @@ import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 import { CurUser } from './decorators/cur-user.decorator';
 import { FinalizeSignupInput, SignupInput } from './dto/signup.input';
-import { AddAdminInput } from "./dto/addAdmin.input";
 import { hash, compare } from 'bcrypt';
 import { CookieOptions } from 'express';
 import { LoginInput } from './dto/login.input';
@@ -96,6 +95,10 @@ export class AuthService {
 
     const password = await hash(input.password, 10);
 
+    if (input.role === "investor") {
+      input.status = "pending";
+    }
+
     const user = await this.userModel.create({
       ...input,
       password,
@@ -104,34 +107,6 @@ export class AuthService {
 
     return {
       token: await this.signToken(user),
-      user,
-    };
-  }
-
-  // add admin account
-  async addAdmin(input: AddAdminInput) {
-    const email = input.email
-    const existingUser = await this.userModel.findOne({
-      email: email,
-    });
-
-    if (existingUser) throw new ConflictException();
-
-    const password = await hash(input.password, 10);
-
-    const user = await this.userModel.create({
-      email,
-      password,
-      fullName: 'admin',
-      companyName: 'admin',
-      country: 'PE',
-      role: 'admin',
-      phone: '51111111111',
-      accessKey: Date.now().toString(),
-    });
-
-    return {
-      token: 'success',
       user,
     };
   }
@@ -200,6 +175,9 @@ export class AuthService {
   }
 
   async finalizeSignup({ pendingUserToken, ...input }: FinalizeSignupInput) {
+    if (input.role === "investor") {
+      input.status = "pending";
+    }
     const user = await this.usersService.activatePendingUser(
       pendingUserToken,
       input,

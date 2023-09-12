@@ -62,6 +62,10 @@ export class User implements UserBase {
   role: UserRole;
 
   @Prop()
+  @Field(() => String)
+  status?: string; // pending, validating, approved
+
+  @Prop()
   accessKey: string;
 
   @Prop()

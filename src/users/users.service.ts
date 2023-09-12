@@ -7,6 +7,16 @@ import {
   PendingUserDocument,
 } from './schemas/pending-user.schema';
 import { User, UserBase, UserDocument } from './schemas/user.schema';
+import { Field, InputType } from '@nestjs/graphql';
+
+@InputType()
+export class updateInvestorInput {
+  @Field()
+  _id: string;
+
+  @Field()
+  status: string; // pending, validating, approved
+}
 
 @Injectable()
 export class UsersService {
@@ -44,6 +54,15 @@ export class UsersService {
     return token;
   }
 
+  async updateInvestor({ _id, ...input }: updateInvestorInput) {
+    const user = await this.userModel.findOne({ _id });
+    if (!user) return true;
+
+    await this.userModel.updateOne({ _id }, input);
+
+    return true
+  }
+
   async activatePendingUser(pendingUserToken: string, info: UserBase) {
     const pendingUser = await this.pendingUserModel.findOne({
       token: pendingUserToken,
@@ -76,14 +95,15 @@ export class UsersService {
   }
 
   async getUsers(
-    userType?: string,
+    statusSearch?: string,
     descCreatedAt?: boolean
   ): Promise<User[]> {
     const conditions: FilterQuery<UserDocument> = {};
 
-    if (userType) {
-      conditions.role = userType
+    if (statusSearch) {
+      conditions.status = statusSearch;
     }
+    
     return this.userModel.find(conditions).sort({ createdAt: descCreatedAt ? -1 : 1 });
   }
 

@@ -30,6 +30,9 @@ class SignupBase {
 
   @Field(() => UserRole)
   role: UserRole;
+
+  @Field(() => String)
+  status?: string;
 }
 
 @InputType()
