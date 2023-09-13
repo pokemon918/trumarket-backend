@@ -18,6 +18,7 @@ import { MailsModule } from './mails/mails.module';
 import { InvestmentsModule } from './investments/investments.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { QuoteModule } from './quote/quote.module';
 
 const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
 
@@ -25,6 +26,7 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
   imports: [
     CompaniesModule,
     ContractsModule,
+    QuoteModule,
     AuthModule,
     UsersModule,
     MongooseModule.forRoot(MONGO_URI),
