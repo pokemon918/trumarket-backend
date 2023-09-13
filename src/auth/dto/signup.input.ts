@@ -31,7 +31,7 @@ class SignupBase {
   @Field(() => UserRole)
   role: UserRole;
 
-  @Field(() => String)
+  @Field({ nullable: true })
   status?: string;
 }
 
