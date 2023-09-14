@@ -25,7 +25,7 @@ export class Quote {
   @Field()
   name: string;
 
-  @Prop()
+  @Prop({ unique: false })
   @Field()
   email: string;
 
