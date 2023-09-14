@@ -8,6 +8,7 @@ import { FilterQuery, Model } from 'mongoose';
 import { CreateQuoteInput } from './dto/create-quote.input';
 import { Quote, QuoteDocument } from './schemas/quote.schema';
 import { Company, CompanyDocument } from '../companies/schemas/company.schema';
+import { Product, ProductDocument } from 'src/products/schemas/product.schema';
 //import { Twilio } from 'twilio';
 
 @Injectable()
@@ -17,6 +18,8 @@ constructor(
         private quoteModel: Model<QuoteDocument>,
         @InjectModel(Company.name)
         private companyModel: Model<CompanyDocument>,
+        @InjectModel(Product.name)
+        private productModel: Model<ProductDocument>,
         //private twilioClient: Twilio
     ) {
     // this.twilioClient = new Twilio(
@@ -85,5 +88,9 @@ constructor(
        // await this.sendRFQMessage(supplier, rfq);
 
         return this.quoteModel.findOne({ _id: rfq._id });
+    }
+
+    async getQuoteProduct(productId: string) {
+      return this.productModel.findOne({ _id: productId });
     }
 }
