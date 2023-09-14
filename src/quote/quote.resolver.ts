@@ -46,6 +46,11 @@ import { CreateQuoteInput } from './dto/create-quote.input';
     createQuote(@Args('input') input: CreateQuoteInput) {
       return this.quoteService.createQuote(input);
     }
+
+    @ResolveField(() => Product)
+    async product(@Parent() { productId }: Quote) {
+      return this.quoteService.getQuoteProduct(productId);
+    }
   
     // @Mutation(() => Quote)
     // updateQuote(@Args('input') input: UpdateCompanyInput) {
