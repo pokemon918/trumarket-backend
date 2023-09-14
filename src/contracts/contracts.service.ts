@@ -30,7 +30,8 @@ export class ContractsService {
     const expired = counts.find((c) => c._id === "Expired")
     const rejected = counts.find((c) => c._id === "Rejected")
     const funded = counts.find((c) => c._id === "Funded")
-    return [pending?pending.count:0, expired?expired.count:0, rejected?rejected.count:0, funded?funded.count:0]
+    const approved = counts.find((c) => c._id === "Approved")
+    return [pending?pending.count:0, expired?expired.count:0, rejected?rejected.count:0, funded?funded.count:0, approved?approved.count:0]
   }
 
   getContracts(
