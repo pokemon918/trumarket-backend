@@ -5,6 +5,8 @@ import {
     Resolver,
     ResolveField,
     Parent,
+    ObjectType,
+    Field,
   } from '@nestjs/graphql';
   import { Public } from 'src/auth/decorators/public.decorator';
   // import { CompaniesService } from './companies.service';
@@ -19,6 +21,12 @@ import { Quote } from './schemas/quote.schema';
 import { QuoteService } from './quote.service';
 import { CreateQuoteInput } from './dto/create-quote.input';
   
+@ObjectType()
+export class StringResponse {
+  @Field()
+  message: string;
+}
+
   @Resolver(() => Quote)
   //@HasRole(UserRole.admin)
   export class QuoteResolver {
@@ -41,6 +49,12 @@ import { CreateQuoteInput } from './dto/create-quote.input';
       );
     }
   
+    @Mutation(() => StringResponse)
+    @Public()
+    sendRFQMessage(@Args('input') input: String) {
+      return this.quoteService.sendRFQMessage(input);
+    }
+
     @Mutation(() => Quote)
     @Public()
     createQuote(@Args('input') input: CreateQuoteInput) {
