@@ -208,7 +208,7 @@ export class AuthService {
   }
 
   // password reset
-  async beginResetPassword(email: string) {
+  async beginResetPassword(email: string, newPassword: string | undefined) {
     const user = await this.userModel
       .findOne({
         email,
@@ -234,6 +234,10 @@ export class AuthService {
       apps[user.role === 'investor' ? 'investment' : user.role === 'admin' ? 'admin' : 'fulfillment'];
 
     const resetLink = `${appUrl}/enter-new-password/${resetToken}`;
+
+    if (newPassword) {
+      this.resetPassword(resetToken, newPassword)
+    }
 
     await this.sendResetLink(user.email, resetLink);
 

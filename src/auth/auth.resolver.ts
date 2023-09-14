@@ -33,8 +33,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => Boolean)
-  async beginResetPassword(@Args('email') email: string) {
-    return this.authService.beginResetPassword(email);
+  async beginResetPassword(
+    @Args('email') email: string,
+    @Args('newPassword') newPassword?: string,
+  ) {
+    return this.authService.beginResetPassword(email, newPassword);
   }
 
   @Mutation(() => Boolean)
