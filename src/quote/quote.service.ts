@@ -9,7 +9,8 @@ import { CreateQuoteInput } from './dto/create-quote.input';
 import { Quote, QuoteDocument } from './schemas/quote.schema';
 import { Company, CompanyDocument } from '../companies/schemas/company.schema';
 import { Product, ProductDocument } from 'src/products/schemas/product.schema';
-//import { Twilio } from 'twilio';
+const Twilio = require('twilio');
+
 
 @Injectable()
 export class QuoteService {
@@ -52,6 +53,35 @@ constructor(
     //         await this.quoteModel.updateOne({_id }, { status: 'Rejected' });
     //     }
     // }
+
+    async sendRFQMessage(input:String) {
+      // Find your Account SID and Auth Token at twilio.com/console
+      // and set the environment variables TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
+      const accountSid = process.env.TWILIO_ACCOUNT_SID;
+      const authToken = process.env.TWILIO_AUTH_TOKEN;
+  
+      const twilioClient = new Twilio(accountSid, authToken);
+  
+      // Construct your WhatsApp message
+      const message = `hello`;
+  
+  
+      // Send the WhatsApp message
+      try {
+       const res  = await twilioClient.messages.create({
+          from: 'whatsapp:+14155238886',
+          body: input,
+          to: 'whatsapp:+51964291840'
+        });
+  
+return {message: res};
+       
+      } catch (error) {
+        // Handle any errors here
+        console.error('Error sending WhatsApp message:', error);
+  return {message: error};
+      }
+    }
 
     getQuotes(
       productId?: string,
