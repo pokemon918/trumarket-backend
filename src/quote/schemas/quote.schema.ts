@@ -1,6 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { GraphQLJSONObject } from 'graphql-type-json';
 import { Document, Types } from 'mongoose';
+import { Product } from 'src/products/schemas/product.schema';
 
 @ObjectType()
 @Schema({ timestamps: true })
@@ -10,7 +12,10 @@ export class Quote {
 
   @Prop()
   @Field()
-  product: string;
+  productId: string;
+
+  @Field(() => Product)
+  product: Product;
 
   @Prop()
   @Field()
@@ -20,10 +25,6 @@ export class Quote {
   @Field()
   name: string;
 
-  @Prop()
-  @Field()
-  country: string;
-
   @Prop({ unique: true })
   @Field()
   email: string;
@@ -32,25 +33,29 @@ export class Quote {
   @Field()
   phone: string;
 
-  @Prop()
-  @Field()
-  portOfLoading: string;
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  @Prop({ type: Object })
+  portOfLoading?: Record<string, any>;
+
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  @Prop({ type: Object })
+  portOfArrival?: Record<string, any>;
+
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  @Prop({ type: Object })
+  paymentTerms?: Record<string, any>;
+
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  @Prop({ type: Object })
+  rfqStatus?: Record<string, any>;
 
   @Prop()
   @Field()
-  portOfArrival: string;
+  volume: number;
 
   @Prop()
   @Field()
-  quantity: number;
-
-  @Prop()
-  @Field()
-  price: number;
-
-  @Prop()
-  @Field()
-  status: string; // Approved, Rejected, Pending
+  SpecifyDetails: string;
 
   @Field()
   createdAt: Date;

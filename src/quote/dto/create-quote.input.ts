@@ -1,11 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { GraphQLJSONObject } from 'graphql-type-json';
 import { IsMongoId } from 'src/validators/is-mongo-id';
 
 
 @InputType()
 export class CreateQuoteInput {
   @Field()
-  product: string;
+  @IsMongoId()
+  productId: string;
 
   @Field()
   companyName: string;
@@ -14,23 +16,23 @@ export class CreateQuoteInput {
   name: string;
 
   @Field()
-  country: string;
-
-  @Field()
   email: string;
 
   @Field()
   phone: string;
+  
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  portOfLoading?: Record<string, any>;
 
-  @Field()
-  portOfLoading: string;
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  portOfArrival?: Record<string, any>;
 
-  @Field()
-  portOfArrival: string;
+  @Field(() => GraphQLJSONObject, { nullable: true })
+  paymentTerms?: Record<string, any>;
 
   @Field()
   volume: number;
 
   @Field()
-  price: number;
+  SpecifyDetails: string;
 }
