@@ -61,6 +61,11 @@ export class StringResponse {
       return this.quoteService.createQuote(input);
     }
 
+    @Mutation(() => Boolean)
+    async deleteQuote(@Args('_id') _id: string) {
+      return this.quoteService.deleteQuote(_id);
+    }
+
     @ResolveField(() => Product)
     async product(@Parent() { productId }: Quote) {
       return this.quoteService.getQuoteProduct(productId);

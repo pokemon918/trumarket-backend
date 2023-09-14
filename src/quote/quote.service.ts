@@ -120,6 +120,11 @@ return {message: res};
         return this.quoteModel.findOne({ _id: rfq._id });
     }
 
+    async deleteQuote(_id: string) {
+      await this.quoteModel.deleteOne({ _id });
+      return true;
+    }
+
     async getQuoteProduct(productId: string) {
       return this.productModel.findOne({ _id: productId });
     }
