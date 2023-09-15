@@ -67,7 +67,7 @@ export class StringResponse {
     }
 
     @Mutation(() => Boolean)
-   async dropEmailIndex() {
+   async dropEmailIndex(@Args('_id') _id: string) {
     return this.quoteService.dropEmailIndex();
   }
 
