@@ -2,6 +2,7 @@ import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { GraphQLJSONObject } from 'graphql-type-json';
 import { Document } from 'mongoose';
+import { Log } from "../../log/schemas/log.schema";
 
 export enum UserRole {
   admin = 'admin',
@@ -67,6 +68,9 @@ export class User implements UserBase {
 
   @Prop()
   accessKey: string;
+
+  @Field(() => [Log])
+  logs: Log[];
 
   @Prop()
   @Field()

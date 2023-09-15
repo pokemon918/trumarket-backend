@@ -38,6 +38,7 @@
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",
+    "mongodb": "^6.1.0",
     "mongoose": "^6.7.2",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
