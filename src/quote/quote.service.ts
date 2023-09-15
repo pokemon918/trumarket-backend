@@ -125,16 +125,7 @@ return {message: res};
       return true;
     }
 
-    async dropEmailIndex() {
-      try {
-        await this.quoteModel.collection.dropIndex('email');
-        console.log('Index dropped successfully.');
-        return true;
-      } catch (error) {
-        console.error('Error dropping index:', error);
-        return false;
-      }
-    }
+   
 
     async getQuoteProduct(productId: string) {
       return this.productModel.findOne({ _id: productId });
