@@ -66,10 +66,7 @@ export class StringResponse {
       return this.quoteService.deleteQuote(_id);
     }
 
-    @Mutation(() => Boolean)
-   async dropEmailIndex(@Args('_id') _id: string) {
-    return this.quoteService.dropEmailIndex();
-  }
+    
 
 
     @ResolveField(() => Product)
