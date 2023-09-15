@@ -8,6 +8,7 @@ import {
 } from './schemas/pending-user.schema';
 import { User, UserBase, UserDocument } from './schemas/user.schema';
 import { Field, InputType } from '@nestjs/graphql';
+import { Log, LogDocument } from "../log/schemas/log.schema";
 
 @InputType()
 export class updateInvestorInput {
@@ -25,6 +26,8 @@ export class UsersService {
     private pendingUserModel: Model<PendingUserDocument>,
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
+    @InjectModel(Log.name)
+    private logModel: Model<LogDocument>,
   ) {}
 
   async getStatistics() {
@@ -117,5 +120,9 @@ export class UsersService {
 
     await this.userModel.deleteOne({ _id });
     return true;
+  }
+
+  async getUserLogs(userId: string) {
+    return this.logModel.find({ userId });
   }
 }

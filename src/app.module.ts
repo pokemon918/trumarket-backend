@@ -12,6 +12,7 @@ import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 import { FilesModule } from './files/files.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { LogsModule } from './log/logs.module';
 import { ArticlesModule } from './articles/articles.module';
 import { KeywordsModule } from './keywords/keywords.module';
 import { MailsModule } from './mails/mails.module';
@@ -45,6 +46,7 @@ const { MONGO_URI, NODE_ENV, CORS } = process.env as { [k: string]: string };
     ProductsModule,
     InvestmentsModule,
     CategoriesModule,
+    LogsModule,
     ArticlesModule,
     KeywordsModule,
     MailsModule,

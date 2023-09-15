@@ -1,9 +1,10 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, ResolveField, Parent } from '@nestjs/graphql';
 import { CurUser } from 'src/auth/decorators/cur-user.decorator';
 import { HasRole } from 'src/auth/decorators/has-role.decorator';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { User, UserRole } from './schemas/user.schema';
 import { UsersService, updateInvestorInput } from './users.service';
+import { Log } from "../log/schemas/log.schema";
 
 @Resolver(() => User)
 @HasRole(UserRole.admin)
@@ -46,5 +47,10 @@ export class UsersResolver {
   @Mutation(() => Boolean)
   deleteUser(@Args('_id') _id:string) {
     return this.userService.deleteUser(_id);
+  }
+
+  @ResolveField(() => Log)
+  async logs(@Parent() { _id }: User) {
+    return this.userService.getUserLogs(_id);
   }
 }
